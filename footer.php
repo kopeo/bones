@@ -27,8 +27,19 @@
 		</div>
 
 		<?php // all js scripts are loaded in library/bones.php ?>
-		<?php wp_footer(); ?>
-
+	<div id="outerClickLayer"></div>
+	<a id="side-menu-trigger" href="javascript:void(0)"><i class="fa fa-list"></i></a>
+	<div id="side-menu" class="bg-dark">
+		<div class="side-menu-body">
+		<?php get_search_form(); ?>
+		<?php wp_nav_menu(array(
+			'menu' => 'side_menu',
+			'container' => false,
+			'menu_class' => 'side-nav'
+		)); ?>
+		</div>
+	</div>
+	<?php wp_footer(); ?>
 	</body>
 
 </html> <!-- end of site. what a ride! -->

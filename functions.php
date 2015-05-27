@@ -8,6 +8,11 @@ just edit things like thumbnail sizes, header images,
 sidebars, comments, etc.
 */
 
+global $url,$tpldir,$tel;
+$tel = "03-5491-5009";
+$url = get_bloginfo('url', 'display'); //ブログのURL
+$tpldir = get_bloginfo('template_directory', 'display') . '/library'; //ブログのテンプレートディレクトリ
+
 // LOAD BONES CORE (if you remove this, the theme will break)
 require_once( 'library/bones.php' );
 
@@ -58,6 +63,14 @@ function bones_ahoy() {
   // cleaning up excerpt
   add_filter( 'excerpt_more', 'bones_excerpt_more' );
 
+  // 管理バーの非表示
+  add_filter( 'show_admin_bar', '__return_false' );
+
+  // javascript @ frontend
+  add_action('template_redirect','change_jquery');
+
+  // 『固定ページ』に抜粋ボックスを追加 add excerpt to pages
+  add_post_type_support('page', 'excerpt');
 } /* end bones ahoy */
 
 // let's get this party started
@@ -115,14 +128,14 @@ new image size.
 
 /************* THEME CUSTOMIZE *********************/
 
-/* 
+/*
   A good tutorial for creating your own Sections, Controls and Settings:
   http://code.tutsplus.com/series/a-guide-to-the-wordpress-theme-customizer--wp-33722
-  
+
   Good articles on modifying the default options:
   http://natko.com/changing-default-wordpress-theme-customization-api-sections/
   http://code.tutsplus.com/tutorials/digging-into-the-theme-customizer-components--wp-27162
-  
+
   To do:
   - Create a js for the postmessage transport method
   - Create some sanitize functions to sanitize inputs
@@ -132,7 +145,7 @@ new image size.
 function bones_theme_customizer($wp_customize) {
   // $wp_customize calls go here.
   //
-  // Uncomment the below lines to remove the default customize sections 
+  // Uncomment the below lines to remove the default customize sections
 
   // $wp_customize->remove_section('title_tagline');
   // $wp_customize->remove_section('colors');
@@ -142,7 +155,7 @@ function bones_theme_customizer($wp_customize) {
 
   // Uncomment the below lines to remove the default controls
   // $wp_customize->remove_control('blogdescription');
-  
+
   // Uncomment the following to change the default section titles
   // $wp_customize->get_section('colors')->title = __( 'Theme Colors' );
   // $wp_customize->get_section('background_image')->title = __( 'Images' );
@@ -238,10 +251,86 @@ external fonts. If you're using Google Fonts, you
 can replace these fonts, change it in your scss files
 and be up and running in seconds.
 */
-function bones_fonts() {
-  wp_enqueue_style('googleFonts', 'http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic');
+// function bones_fonts() {
+//   wp_enqueue_style('googleFonts', 'http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic');
+// }
+
+// add_action('wp_enqueue_scripts', 'bones_fonts');
+
+
+// change jQuery version on frontend
+function change_jquery(){
+  global $tpldir;
+  wp_deregister_script('jquery');
+  if(preg_match('/(?i)msie [1-8]/',$_SERVER['HTTP_USER_AGENT'])) {
+    // if IE<=8
+      wp_enqueue_script('jquery','//ajax.googleapis.com/ajax/libs/jquery/1.11.1 /jquery.min.js');
+    } else {
+      wp_enqueue_script('jquery','//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js');
+  }
+  if (wp_is_mobile()):
+    //タブレットでposition fixedを使うためには両方で必要?
+    //wp_enqueue_script('jqueryMobile', '//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.js');
+    wp_enqueue_script('jqueryMobile', $tpldir . "/js/jquery.mobile.custom.min.js");
+    // wp_enqueue_script('jqueryMobile', '//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.js');
+  endif;
 }
 
-add_action('wp_enqueue_scripts', 'bones_fonts');
+function getPostImage($mypost, $size = 'full'){
+  global $url,$tpldir;
+  if(is_object($mypost)) {
+    $_id = $mypost->ID;
+  } else {
+    $_id = $mypost;
+    $mypost = get_post($_id);
+  }
+  $pattern = str_replace("." ,"\.",$_SERVER['SERVER_NAME']) ."\/wp-content";
+  $pattern = '/<img([ ]+)([^>]*)src\=["|\']([^"|^\']+'. $pattern .'[^"|^\']+)["|\']([^>]*)>/i';
+  $resultArray = array();
+
+  //no image
+  $resultArray['flag'] = false;
+  $resultArray['url'] = $tpldir .'/images/sample.png';
+  $resultArray['alt'] = $mypost->post_title;
+  $resultArray['id'] = 0;
+  //引数チェック
+  if(empty($mypost)){ return $resultArray; }
+  //サムネイルを優先
+
+  if(has_post_thumbnail($_id)) {
+    $eyecatch = get_the_post_thumbnail($_id, $size);
+    $dummy = preg_match('/<img([ ]+)([^>]*)src\=["|\']([^"|^\']+)["|\']([^>]*)>/', $eyecatch, $img_array);
+    $dummy = preg_match('/<img([ ]+)([^>]*)alt\=["|\']([^"|^\']+)["|\']([^>]*)>/', $eyecatch, $alt_array);
+    $resultArray['flag'] = true;
+    $resultArray["url"] = $img_array[3];
+    $resultArray["alt"] = ($alt_array[3])? $alt_array[3]: $mypost->post_title;
+    $resultArray["id"] = get_post_thumbnail_id($_id);
+  } else {  // 記事に紐づけられた画像を取得
+    $files = get_children(array('post_parent' => $mypost->ID, 'post_type' => 'attachment', 'post_mime_type' => 'image'));
+    if(is_array($files) && count($files) != 0){
+      $files=array_reverse($files);
+      $file=array_shift($files);
+      $resultArray['flag'] = true;
+      $resultArray["url"] = wp_get_attachment_url($file->ID);
+      $resultArray["alt"] = $file->post_title;
+      $resultArray["id"] = $file->ID;
+    } elseif (preg_match($pattern,$mypost->post_content,$img_array)) {
+      // imgタグで直接画像にアクセスしているものがある
+      $dummy=preg_match('/<img([ ]+)([^>]*)alt\=["|\']([^"|^\']+)["|\']([^>]*)>/',$mypost->post_content,$alt_array);
+      $resultArray['flag'] = true;
+      $resultArray["url"] = $img_array[3];
+      $resultArray["alt"] = ($alt_array[3])? $alt_array[3]: $mypost->post_title;
+    }
+  }
+  return($resultArray);
+}
+
+function get_timThumbURL($img, $w = 80, $h = 0) {
+  global $tpldir, $url;
+  if(!$h) $h = $w;
+  $w = ($w == "auto") ? "": "&w=${w}";
+  $h = ($h == "auto") ? "": "&h=${h}";
+  return esc_url($tpldir ."/timthumb.php?src=" .str_replace($url, "", $img) ."${w}${h}&q=100");
+}
 
 /* DON'T DELETE THIS CLOSING TAG */ ?>

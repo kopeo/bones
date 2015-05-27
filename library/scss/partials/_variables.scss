@@ -37,11 +37,16 @@ $green:             #7dd667;
 $bones-pink:        #f01d4f;
 $blue:              #2980b9;
 
-$link-color:        $bones-pink;
+$tds-blue: #7dd1d6;
+
+$link-color:        darken($tds-blue, 20%);
 $link-hover:        darken($link-color, 9%);
 
 $border-color:      #ccc;
 $disabled-gray:     #cfcfcf;
+
+
+$bdr-color01: #eee;
 
 
 /*
@@ -49,3 +54,16 @@ Here's a great tutorial on how to
 use color variables properly:
 http://sachagreif.com/sass-color-variables/
 */
+
+
+/*********************
+FONT SIZE
+Vertical Rhythm
+*********************/
+$base-font-size: 14px;
+$base-line-height: 21px;
+
+// 単位をremにする（デフォルトはem）
+$rhythm-unit: "rem";
+// remだけでなくpxも同時に出力。（デフォルトでtrueなので不要）
+$rem-with-px-fallback: true;

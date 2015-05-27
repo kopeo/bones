@@ -17,13 +17,16 @@ GENERAL STYLES
 
 body {
 	font-family: $lato;
-	font-size: 100%;
-	line-height: 1.5;
+	// font-size: 100%;
+	// line-height: 1.5;
 	color: $text-color;
-	background-color: $gray;
+	background-color: $white;
   	-webkit-font-smoothing: antialiased;
   	-moz-osx-font-smoothing: grayscale;
 }
+
+// htmlタグにrhythm用のベース値を設定する(要Compass)
+@include establish-baseline;
 
 /********************
 WORDPRESS BODY CLASSES
@@ -102,6 +105,30 @@ a, a:visited {
 		-webkit-tap-highlight-color : rgba( 0, 0, 0, 0.3 );
 	}
 }
+.bg-dark {
+	a, a:visited {
+		color: darken($white, 5%);
+		&:hover, &:focus {
+			color: $white;
+		}
+	}
+}
+
+/******************************************************************
+responsive image
+******************************************************************/
+
+img {
+	max-width: 100%;
+	height: auto;
+	// background: url(../images/sample.png) 50% 20% no-repeat;
+}
+figure {
+	text-align: center;
+	img {
+		margin: 0;
+	}
+}
 
 /******************************************************************
 H1, H2, H3, H4, H5 STYLES
@@ -122,46 +149,121 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5 {
 }
 
 h1, .h1 {
-	font-size: 2.5em;
-	line-height: 1.333em;
+	@include adjust-font-size-to(30px, 2);
+	@include rhythm-margins(0);
 }
 
 h2, .h2 {
-	font-size: 1.75em;
-	line-height: 1.4em;
-	margin-bottom: 0.375em;
+	@include adjust-font-size-to(28px, 2);
+	@include rhythm-margins(0, 1);
+	font-family: $serif;
+	// font-size: 1.75em;
+	// line-height: 1.4em;
+	// margin-bottom: 0.375em;
 }
 
 h3, .h3 {
-	font-size: 1.125em;
+	@include adjust-font-size-to(24px, 2);
+	// font-size: 1.125em;
+	@include rhythm-margins(.7, .3);
+	font-family: $serif;
 }
 
 h4, .h4 {
-	font-size: 1.1em;
-	font-weight: 700;
+	@include adjust-font-size-to(20px, 2);
+	// font-size: 1.1em;
+	font-weight: normal;
 }
 
 h5, .h5 {
-	font-size: 0.846em;
-	line-height: 2.09em;
-	text-transform: uppercase;
+	@include adjust-font-size-to(16px, 1);
+	// font-size: 0.846em;
+	// line-height: 2.09em;
+	// text-transform: uppercase;
+	// letter-spacing: 2px;
+}
+h6 {
+	@include adjust-font-size-to(12px, 1);
+	// text-transform: uppercase;
 	letter-spacing: 2px;
 }
+hgroup {
+	@include rhythm-margins(0, 1);
+	h1, h2, h3, h4, h5, h6 {
+		margin: 0;
+	}
+}
+
+
+/*********************
+LAYOUT
+*********************/
+.visible-phone {display: block !important;}
+.visible-tablet {display: none !important;}
+.visible-desktop {display: none !important;}
+.hidden-phone {display: none !important;}
+.hidden-tablet {display: block !important;}
+.hidden-desktop {display: block !important;}
+
+#outerClickLayer {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index: 99;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	display: none;
+}
+
+// // サイドメニュー表示時に一時的にコンテンツがはみ出すので
+// #container {
+// 	// overflow: hidden;
+// }
 
 /*********************
 HEADER STYLES
 *********************/
 
 .header {
-	background-color: $black;
+	// background-color: $black;
+	background: $white;
+	border-top: 3px solid $tds-blue;
+	border-bottom: 1px solid $bdr-color01;
 }
-
-	#logo {
-		margin: 0.75em 0;
-
-		a {
-			color: $white;
+	.head-branding {
+		text-align: center;
+	}
+		#logo {
+			margin: 0;
+			a {
+				color: $black;
+			}
 		}
+		#discription {
+			margin: 0;
+		}
+
+	.head-download {
+		@include rhythm-margins(.5);
+		.btn__blue {
+			font-size: 100%;
+		}
+	}
+
+	.head-contact {
+	}
+		.phoneNumber {
+			@include adjust-font-size-to(26px, 2);
+			font-weight: bold;
+			display: block;
+			.fa {margin-right: .2em;}
+		}
+	// HEADER NAV
+	// -----------
+	.head-nav {
+		display: none;
 	}
 
 /*********************
@@ -184,9 +286,9 @@ and more scalable.
 
 		a {
 			display: block;
-			color: $white;
+			// color: $white;
 			text-decoration: none;
-			padding: 0.75em;
+			padding: 0 2em 0 0;
 
 			/*
 			remember this is for mobile ONLY, so there's no need
@@ -248,11 +350,59 @@ and more scalable.
 
 
 /*********************
+SIDE MENU
+*********************/
+#side-menu-trigger {
+	position: fixed;
+	top: rhythm(1);
+	right: rhythm(1);
+	color: $meta-gray;
+	display: block;
+	@include border-radius(25px);
+	border: 1px solid $meta-gray;
+	@include adjust-font-size-to(28px, 2.5);
+	width: 53px;
+	text-align: center;
+	background: rgba(255, 255, 255, .2);
+	@include transition(color .5s linear, background-color .5s linear);
+	&:hover {
+		background: rgba(255, 255, 255, .9);
+		color: darken($meta-gray, 20%);
+	}
+}
+#side-menu {
+	position: fixed;
+	top: 0;
+	right: 0;
+	z-index: 999;
+	// width: 80%;
+	overflow: hidden;
+	height: 100%;
+	background: $black;
+	display: none;
+	border-left: 1px solid lighten($black, 10%);
+	&.outer {
+		@include box-shadow(0 0 5px rgba(0, 0, 0, .5));
+	}
+}
+	$sidePaddingHorizon: 2rem;	//サイドメニューの左右の余白
+	.side-menu-body {
+		// padding: rhythm(2) 2em;
+		// min-width: 200px;
+		overflow: hidden;
+	}
+	#searchform {
+		label {display: none;}
+	}
+	.side-menu-body {
+		// display: none;
+	}
+
+/*********************
 POSTS & CONTENT STYLES
 *********************/
 
 #content {
-	margin-top: 1.5em;
 }
 
 		.hentry {
@@ -734,7 +884,7 @@ COMMENT STYLES
 
 	/* comment reply link */
 	.comment-reply-link {
-		@extend .blue-btn;
+		@extend .btn__blue;
 		font-size: 0.9em;
 		float: right;
 
@@ -790,7 +940,7 @@ COMMENT FORM STYLES
 
 	/* comment submit button */
 	#submit {
-		@extend .blue-btn;
+		@extend .btn__blue;
 		float: right;
 		font-size: 1em;
 	}

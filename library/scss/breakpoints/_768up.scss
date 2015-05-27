@@ -27,13 +27,66 @@ LAYOUT & GRID STYLES
 	width: 760px;
 }
 
+.visible-phone {display: none !important;}
+.visible-tablet {display: block !important;}
+.visible-desktop {display: none !important;}
+.hidden-phone {display: block !important;}
+.hidden-tablet {display: none !important;}
+.hidden-desktop {display: block !important;}
+
 /*********************
 HEADER STYLES
 *********************/
-
-.header {}
+$header-height: 80px;
+.header {
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 9;
+}
+	.head-branding {
+		height: $header-height;
+	}
+	.head-nav {
+		display: block;
+		// @include opacity(0);
+	}
+	.head-branding-body,
+	.head-contact {
+		text-align: left;
+	}
+	.head-download {
+		text-align: right;
+		padding-right: 2em;
+	}
 
 	#logo {}
+	// SIDE MENU
+	// --------------
+	#side-menu-trigger {
+		top: 122px;
+	}
+
+// トップページのヘッダーはスクロールに応じて高さが変わる
+.home {
+	.head-branding {
+		display: table-cell;
+		vertical-align: middle;
+		height: 300px;
+	}
+	.head-branding-body {
+		display: inline-block;
+		vertical-align: middle;
+	}
+	.head-nav {
+		display: none;
+	}
+	#content {
+		margin-top: 300px;
+	}
+}
 
 /*********************
 NAVIGATION STYLES
@@ -57,7 +110,7 @@ NAVIGATION STYLES
 			has the possibility of being a mobile device.
 			*/
 			&:hover, &:focus {
-				color: $white;
+				// color: $white;
 				text-decoration: underline;
 			}
 		}
@@ -136,6 +189,10 @@ NAVIGATION STYLES
 	}  /* end current highlighters */
 
 } /* end .nav */
+
+#content {
+	margin-top: $header-height + 21px;
+}
 
 /*********************
 SIDEBARS & ASIDES

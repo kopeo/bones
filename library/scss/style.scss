@@ -23,6 +23,8 @@ our mixins, functions, and variables that we'll be using across
 the whole project.
 *********************/
 
+@import "compass";
+
 // normalize: http://necolas.github.io/normalize.css/
 @import "partials/normalize";
 
@@ -58,6 +60,9 @@ you hate oysters, then the world is your peanut butter & jelly sandwich.
 // forms (inputs & labels)
 @import "modules/forms";
 
+// font awesome
+@import "../font-awesome/scss/font-awesome.scss";
+
 /*********************
 BASE (MOBILE) SIZE
 This are the mobile styles. It's what people see on their phones. If
@@ -67,6 +72,10 @@ the other stylesheets. Remember, keep it light: Speed is Important.
 
 // styles in base.scss
 @import "breakpoints/base";
+
+@media only screen and (max-width: 767px) {
+	@import "breakpoints/767down";
+}
 
 /*********************
 LARGER MOBILE DEVICES

@@ -12,3 +12,10 @@ be seen on the Desktop.
 .wrap {
   width: 1040px;
 }
+
+.visible-phone {display: none !important;}
+.visible-tablet {display: none !important;}
+.visible-desktop {display: none !important;}
+.hidden-phone {display: block !important;}
+.hidden-tablet {display: block !important;}
+.hidden-desktop {display: none !important;}

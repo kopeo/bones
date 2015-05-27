@@ -1,5 +1,5 @@
-# Compass is a great cross-platform tool for compiling SASS. 
-# This compass config file will allow you to 
+# Compass is a great cross-platform tool for compiling SASS.
+# This compass config file will allow you to
 # quickly dive right in.
 # For more info about compass + SASS: http://net.tutsplus.com/tutorials/html-css-techniques/using-compass-and-sass-for-css-in-your-next-project/
 
@@ -15,10 +15,12 @@ images_dir = "../images"
 javascripts_dir = "../js"
 environment = :development
 relative_assets = true
+Encoding.default_external = "UTF-8"
 
 
 # 3. You can select your preferred output style here (can be overridden via the command line):
-output_style = :expanded
+# output_style = :expanded
+output_style = :compressed
 
 # 4. When you are ready to launch your WP theme comment out (3) and uncomment the line below
 # output_style = :compressed

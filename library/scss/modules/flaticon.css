@@ -1,0 +1,316 @@
+@font-face {
+	font-family: "Flaticon";
+	src: url("flaticon.eot");
+	src: url("flaticon.eot#iefix") format("embedded-opentype"),
+	url("flaticon.woff") format("woff"),
+	url("flaticon.ttf") format("truetype"),
+	url("flaticon.svg") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+	font-family: Flaticon;
+        font-size: 20px;
+font-style: normal;
+margin-left: 20px;
+}.flaticon-ambulance5:before {
+	content: "\e000";
+}
+.flaticon-ambulance6:before {
+	content: "\e001";
+}
+.flaticon-bicycle6:before {
+	content: "\e002";
+}
+.flaticon-brand1:before {
+	content: "\e003";
+}
+.flaticon-bus10:before {
+	content: "\e004";
+}
+.flaticon-bus11:before {
+	content: "\e005";
+}
+.flaticon-bus12:before {
+	content: "\e006";
+}
+.flaticon-bus13:before {
+	content: "\e007";
+}
+.flaticon-bus14:before {
+	content: "\e008";
+}
+.flaticon-bus15:before {
+	content: "\e009";
+}
+.flaticon-bus16:before {
+	content: "\e00a";
+}
+.flaticon-bus17:before {
+	content: "\e00b";
+}
+.flaticon-bus18:before {
+	content: "\e00c";
+}
+.flaticon-car22:before {
+	content: "\e00d";
+}
+.flaticon-car23:before {
+	content: "\e00e";
+}
+.flaticon-car24:before {
+	content: "\e00f";
+}
+.flaticon-car25:before {
+	content: "\e010";
+}
+.flaticon-car26:before {
+	content: "\e011";
+}
+.flaticon-car27:before {
+	content: "\e012";
+}
+.flaticon-car28:before {
+	content: "\e013";
+}
+.flaticon-car29:before {
+	content: "\e014";
+}
+.flaticon-car30:before {
+	content: "\e015";
+}
+.flaticon-car31:before {
+	content: "\e016";
+}
+.flaticon-car32:before {
+	content: "\e017";
+}
+.flaticon-car33:before {
+	content: "\e018";
+}
+.flaticon-car34:before {
+	content: "\e019";
+}
+.flaticon-car35:before {
+	content: "\e01a";
+}
+.flaticon-car36:before {
+	content: "\e01b";
+}
+.flaticon-car37:before {
+	content: "\e01c";
+}
+.flaticon-car38:before {
+	content: "\e01d";
+}
+.flaticon-car39:before {
+	content: "\e01e";
+}
+.flaticon-car40:before {
+	content: "\e01f";
+}
+.flaticon-car41:before {
+	content: "\e020";
+}
+.flaticon-car42:before {
+	content: "\e021";
+}
+.flaticon-car43:before {
+	content: "\e022";
+}
+.flaticon-car44:before {
+	content: "\e023";
+}
+.flaticon-car45:before {
+	content: "\e024";
+}
+.flaticon-car46:before {
+	content: "\e025";
+}
+.flaticon-car47:before {
+	content: "\e026";
+}
+.flaticon-car48:before {
+	content: "\e027";
+}
+.flaticon-car49:before {
+	content: "\e028";
+}
+.flaticon-car50:before {
+	content: "\e029";
+}
+.flaticon-car51:before {
+	content: "\e02a";
+}
+.flaticon-car52:before {
+	content: "\e02b";
+}
+.flaticon-car53:before {
+	content: "\e02c";
+}
+.flaticon-car54:before {
+	content: "\e02d";
+}
+.flaticon-car55:before {
+	content: "\e02e";
+}
+.flaticon-cogwheels:before {
+	content: "\e02f";
+}
+.flaticon-compass36:before {
+	content: "\e030";
+}
+.flaticon-connecting5:before {
+	content: "\e031";
+}
+.flaticon-construction2:before {
+	content: "\e032";
+}
+.flaticon-convertible:before {
+	content: "\e033";
+}
+.flaticon-cross36:before {
+	content: "\e034";
+}
+.flaticon-diamond15:before {
+	content: "\e035";
+}
+.flaticon-driving:before {
+	content: "\e036";
+}
+.flaticon-emergency5:before {
+	content: "\e037";
+}
+.flaticon-fuel1:before {
+	content: "\e038";
+}
+.flaticon-fuels:before {
+	content: "\e039";
+}
+.flaticon-gasoline:before {
+	content: "\e03a";
+}
+.flaticon-glass6:before {
+	content: "\e03b";
+}
+.flaticon-jeep1:before {
+	content: "\e03c";
+}
+.flaticon-key29:before {
+	content: "\e03d";
+}
+.flaticon-light41:before {
+	content: "\e03e";
+}
+.flaticon-light42:before {
+	content: "\e03f";
+}
+.flaticon-limousine:before {
+	content: "\e040";
+}
+.flaticon-lorry2:before {
+	content: "\e041";
+}
+.flaticon-machine5:before {
+	content: "\e042";
+}
+.flaticon-magnifying24:before {
+	content: "\e043";
+}
+.flaticon-mechanical1:before {
+	content: "\e044";
+}
+.flaticon-mechanics:before {
+	content: "\e045";
+}
+.flaticon-oil3:before {
+	content: "\e046";
+}
+.flaticon-owner:before {
+	content: "\e047";
+}
+.flaticon-pick:before {
+	content: "\e048";
+}
+.flaticon-pistons:before {
+	content: "\e049";
+}
+.flaticon-police1:before {
+	content: "\e04a";
+}
+.flaticon-police2:before {
+	content: "\e04b";
+}
+.flaticon-police:before {
+	content: "\e04c";
+}
+.flaticon-repair3:before {
+	content: "\e04d";
+}
+.flaticon-road14:before {
+	content: "\e04e";
+}
+.flaticon-small124:before {
+	content: "\e04f";
+}
+.flaticon-small126:before {
+	content: "\e050";
+}
+.flaticon-small127:before {
+	content: "\e051";
+}
+.flaticon-taxi3:before {
+	content: "\e052";
+}
+.flaticon-taxi4:before {
+	content: "\e053";
+}
+.flaticon-taxi5:before {
+	content: "\e054";
+}
+.flaticon-taxi6:before {
+	content: "\e055";
+}
+.flaticon-triangular8:before {
+	content: "\e056";
+}
+.flaticon-truck10:before {
+	content: "\e057";
+}
+.flaticon-truck11:before {
+	content: "\e058";
+}
+.flaticon-truck7:before {
+	content: "\e059";
+}
+.flaticon-truck8:before {
+	content: "\e05a";
+}
+.flaticon-truck9:before {
+	content: "\e05b";
+}
+.flaticon-van7:before {
+	content: "\e05c";
+}
+.flaticon-van8:before {
+	content: "\e05d";
+}
+.flaticon-van9:before {
+	content: "\e05e";
+}
+.flaticon-vehicle1:before {
+	content: "\e05f";
+}
+.flaticon-water13:before {
+	content: "\e060";
+}
+.flaticon-wheel8:before {
+	content: "\e061";
+}
+.flaticon-wheel9:before {
+	content: "\e062";
+}
+.flaticon-wrenches:before {
+	content: "\e063";
+}
