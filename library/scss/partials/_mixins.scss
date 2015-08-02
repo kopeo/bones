@@ -70,4 +70,20 @@ probably best not to use it. I mean, were you going to anyway? */
 	box-sizing:         $type;
 }
 
-
+@mixin index($lC:$color-sky, $rC:$color-pink) {
+	position: relative;
+	padding-left: rhythm(1);
+	&:before {
+		position: absolute;
+		content: " ";
+		display: block;
+		width: 0;
+		height: 10px;
+		top: 50%;
+		margin-top: -5px;
+		right: 100%;
+		left: 0;
+		border-left: 5px solid $lC;
+		border-right: 5px solid $rC;
+	}
+}

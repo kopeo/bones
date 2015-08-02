@@ -1,3 +1,86 @@
+.wrap {
+	&.wrap-full {
+		width: 100%;
+	}
+}
+.inner-wrap {
+	width: 96%;
+	margin: 0 auto;
+}
 .header {
-	@include rhythm-padding(3)
+	@include rhythm-padding(.5);
+}
+.home {
+	.header {
+		@include rhythm-padding(3)
+	}
+}
+#main {
+	@include rhythm-margins(0, 3);
+}
+
+.entry-content {
+	.bg-dark {
+		background: darken($tds-blue, 10%);
+	}
+}
+
+/*********************
+PANEL STYLES
+*********************/
+.panel-sentence {
+	@include rhythm-margins(1, 0);
+}
+
+/*********************
+POSTS & CONTENT STYLES
+*********************/
+		.page-title,
+		.archive-title {
+			padding: rhythm(1) 1em;
+			color: $meta-gray;
+			// background: $gray;
+			// background: url(../images/bg-title-mb.jpg) 50% 50% no-repeat;
+			// @include background-size(cover);
+			text-align: center;
+			@include adjust-font-size-to(25px, 2);
+		}
+			.icon-container {
+				display: block;
+				width: 30%;
+				margin: 0 auto;
+				@include adjust-font-size-to(36px, 3)
+			}
+
+
+/*********************
+SIDEBARS & ASIDES
+*********************/
+.sidebar {
+	background: #eee;
+
+	.widgettitle {
+		text-align: center;
+	}
+	.widget {
+		ul:not(.business-calendar-attribute) {
+			border-top: 1px solid darken($gray, 5%);
+			border-bottom: 1px solid $white;
+
+			li {
+				border-bottom: 1px solid darken($gray, 5%);
+				border-top: 1px solid $white;
+
+				a {
+					line-height: rhythm(2);
+					display: block;
+					text-align: center;
+					text-decoration: none;
+					&:hover {
+						background: darken($gray, 3%);
+					}
+				}
+			}
+		}
+	}
 }

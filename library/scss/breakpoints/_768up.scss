@@ -33,6 +33,12 @@ LAYOUT & GRID STYLES
 .hidden-phone {display: block !important;}
 .hidden-tablet {display: none !important;}
 .hidden-desktop {display: block !important;}
+img.visible-phone {display: none !important;}
+img.visible-tablet {display: inline-block !important;}
+img.visible-desktop {display: none !important;}
+img.hidden-phone {display: inline-block !important;}
+img.hidden-tablet {display: none !important;}
+img.hidden-desktop {display: inline-block !important;}
 
 /*********************
 HEADER STYLES
@@ -45,11 +51,14 @@ $header-height: 80px;
 	left: 0;
 	right: 0;
 	z-index: 9;
+	border-bottom: 1px solid $bdr-color01;
+	@include box-shadow(0 0 3px rgba(0, 0, 0, .2));
 }
 	.head-branding {
 		height: $header-height;
 	}
 	.head-nav {
+		clear: left;
 		display: block;
 		// @include opacity(0);
 	}
@@ -66,27 +75,8 @@ $header-height: 80px;
 	// SIDE MENU
 	// --------------
 	#side-menu-trigger {
-		top: 122px;
+		top: 111px;
 	}
-
-// トップページのヘッダーはスクロールに応じて高さが変わる
-.home {
-	.head-branding {
-		display: table-cell;
-		vertical-align: middle;
-		height: 300px;
-	}
-	.head-branding-body {
-		display: inline-block;
-		vertical-align: middle;
-	}
-	.head-nav {
-		display: none;
-	}
-	#content {
-		margin-top: 300px;
-	}
-}
 
 /*********************
 NAVIGATION STYLES
@@ -190,8 +180,221 @@ NAVIGATION STYLES
 
 } /* end .nav */
 
+/******************************************************************
+PANEL STYLE
+******************************************************************/
+.panel-container {
+	position: relative;
+	overflow: hidden;
+	.table {
+		display: table;
+		height: 300px;
+		.panel-body {
+			display: table-cell;
+		}
+	}
+	.sentence-bg:before {
+		display: block;
+		width: 50%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		z-index: 2;
+		content: " ";
+	}
+	.table-top {
+		@extend .table;
+	}
+	.table-middle {
+		@extend .table;
+		.panel-body {
+			vertical-align: middle;
+		}
+	}
+	.table-bottom {
+		@extend .table;
+		.panel-body {
+			vertical-align: bottom;
+		}
+	}
+	.align-left {
+		header,
+		.panel-sentence {
+			text-align: left;
+		}
+	}
+	.align-right {
+		header,
+		.panel-sentence {
+			text-align: right;
+		}
+	}
+	header,
+	.panel-sentence {
+		position: relative;
+		z-index: 2;
+	}
+}
+.panel-1col-center {
+	text-align: center;
+	h1, h2, h3, h4, h5, h6 {
+		text-align: center;
+	}
+}
+.panel-2col-right,
+.panel-2col-left,
+.panel-1col-center {
+	.panel-sentence {
+		// text-align: left;
+	}
+	figure {
+		position: absolute;
+		height: 100%;
+		top: 0;
+		z-index: 1;
+		margin: 0;
+	}
+}
+.panel-2col-right {
+	header, .panel-sentence {
+		margin-left: 52%;
+	}
+	figure {
+		left: 0;
+	}
+	.sentence-bg:before {
+		right: 0;
+	}
+}
+.panel-2col-left {
+	header, .panel-sentence {
+		margin-right: 52%;
+	}
+	figure {
+		right: 0;
+	}
+	.sentence-bg:before {
+		left: 0;
+	}
+}
+.panel-1col-center {
+	figure {
+		left: 0;
+		right: 0;
+		width: 100%;
+	}
+}
+	.sentence-bg {
+		// position: relative;
+		z-index: 2;
+	}
+	.sentence-bg__white {
+		&:before {
+			background: rgba(255, 255, 255, .7);
+		}
+		color: darken($text-color, 15%);
+		text-shadow: 0 0 3px #fff;
+	}
+	.sentence-bg__green {
+		&:before {
+			background: rgba(115, 186, 90, .9);
+		}
+		text-shadow: 0 0 3px rgba(0, 0, 0, .3);
+	}
+	.sentence-bg__black {
+		&:before {
+			background: rgba(20, 20, 20, .9);
+		}
+	}
+/*********************
+PANEL STYPE
+*********************/
+	// responsive panel
+	.p-tab-50 {width: 50%;}
+	.p-tab-55 {width: 55%;}
+	.p-tab-60 {width: 60%;}
+	.p-tab-65 {width: 65%;}
+	.p-tab-70 {width: 70%;}
+	.p-tab-80 {width: 80%;}
+	.p-tab-100 {width: 100%;}
+	.p-tab-window-l {width: 48%; left: 2%;}
+	.p-tab-window-r {width: 48%; right: 2%;}
+	.p-pos-l {left: 0;}
+	.p-pos-r {right: 0}
+
+
+/*********************
+POSTS & CONTENT STYLES
+*********************/
 #content {
-	margin-top: $header-height + 21px;
+	margin: $header-height + 25px auto rhythm(3);
+}
+.hentry {
+	.entry-header {
+		position: relative;
+
+		.byline {
+			position: absolute;
+			top: -10px;
+			left: -10px;
+			background: $brown;
+			color: $white;
+			width: 7em;
+			height: 7em;
+			@include border-radius(50%);
+			text-align: center;
+			font-style: normal;
+			padding-top: 5px;
+			span {
+				display: block;
+				@include adjust-font-size-to(34px, 2);
+			}
+		}
+		.entry-title {
+			padding-left: 80px;
+		}
+	}
+}
+	.entry-content {
+		// h5 {
+		// @include index($color-yellow, $tds-blue);
+		// }
+		// hgroup h5 {
+		// 	padding-left: 0;
+		// 	position: static;
+		// }
+		// h6 {
+		// 	@include index($bones-blue, $bones-orange);
+		// }
+	}
+	.page-title-container {
+		@include rhythm-padding(1);
+		background: #eee;
+	}
+	.page-title,
+	.archive-title {
+		@include adjust-font-size-to(24px, 2);
+		color: $meta-gray;
+	}
+
+// .page-template-default,
+// .single,
+// .blog,
+// .archive,
+// .search {
+// 	#main {
+// 		margin-bottom: rhythm(3);
+// 	}
+// }
+#main {
+	margin-bottom: rhythm(3);
+}
+.home,
+.page-template-page-staff,
+.page-template-page-full {
+	#main {
+		margin-bottom: 0;
+	}
 }
 
 /*********************
@@ -199,22 +402,26 @@ SIDEBARS & ASIDES
 *********************/
 
 .sidebar {
-	margin-top: 2.2em;
+	// margin-top: 2.2em;
 }
 
 	.widgettitle {
-		border-bottom: 2px solid #444;
-		margin-bottom: 0.75em;
+		@include index();
 	}
 
 	.widget {
-		padding: 0 10px;
-		margin: 2.2em 0;
+		padding: 0 0 0 10px;
+		@include rhythm-margins(0, 2);
+
+		&:first-child {
+			.widgettitle {
+				margin-top: 0;
+			}
+		}
 
 		ul {
 			li {
-				margin-bottom: 0.75em;
-
+				@include rhythm-padding(.25);
 				&:first-child {}
 				&:last-child {}
 				a {}
@@ -320,7 +527,62 @@ SIDEBARS & ASIDES
 /*********************
 FOOTER STYLES
 *********************/
+.footer {
+	address {
+		position: static;
+		border: none;
+		background: transparent;
+		&:before, &:after {
+			display: none;
+		}
+	}
+}
+	.sbm-container {
+		position: fixed;
+		bottom: 10px;
+		right: 10px;
+		border: none;
+		z-index: 9;
+	}
+		.sbm-body {
 
+			li {
+				padding: 0;
+				position: relative;
+				span {
+					position: absolute;
+					top: -50px;
+					left: 50%;
+					padding: rhythm(.5) 1em;
+					margin-left: -20px;
+					@include border-radius(8px);
+					background: $black;
+					display: none;
+					&:after {
+						display: block;
+						content: "";
+						position: absolute;
+						// z-index: -1;
+						bottom: -10px;
+						left: 50%;
+						width: 0;
+						height: 0;
+						border: 5px solid transparent;
+						border-top-color: $black;
+						margin-left: -5px;
+					}
+				}
+				&:hover {
+					background: transparent;
+				}
+			}
+			a, a:visited {
+				color: $meta-gray;
+				&:hover, &:active, &:focus {
+					color: darken($meta-gray, 10%);
+				}
+			}
+		}
 /*
 you'll probably need to do quite a bit
 of overriding here if you styled them for
@@ -329,8 +591,13 @@ mobile. Make sure to double check these!
 .footer-links {
 	ul {
 		li {
+			float: none;
+
+			border: none;
+			display: inline-block;
 			a {
-				&:hover {}
+				display: inline;
+				&:hover {background: transparent;}
 			}
 			/*
 			be careful with the depth of your menus.
@@ -342,3 +609,122 @@ mobile. Make sure to double check these!
 	}
 } /* end .footer-links */
 
+/*********************
+RESERVE TOUR FORM STYLE
+*********************/
+.privacyData {
+	dt {
+		clear:left;
+		width: 7em;
+		float:left;
+		line-height: rhythm(2);
+		text-align: right;
+	}
+	dd {
+		margin-left: 9em;
+	}
+}
+
+/*********************
+FRONTPAGE STYLES
+*********************/
+.home {
+	.head-branding {
+		display: table-cell;
+		vertical-align: middle;
+		height: 300px;
+	}
+	.head-branding-body {
+		display: inline-block;
+		vertical-align: middle;
+	}
+	.head-nav {
+		display: none;
+	}
+	#content {
+		margin-top: 304px;
+	}
+
+}
+	$carouselWidth: 497px;
+	.topFeaturedPanel {
+		background: $brown;
+		.owl-carousel {
+			width: $carouselWidth;
+			float: left;
+		}
+		img {
+			vertical-align: bottom;
+		}
+	}
+	.topFeatured-articles {
+		margin: 0 0 0 $carouselWidth;
+		li {
+			width: 50%;
+		}
+		.overLayer-body {
+			margin: 0;
+			position: relative;
+			overflow: hidden;
+		}
+		.overLayer-target {
+			position: absolute;
+			top: 100%;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, .8);
+			color: $white;
+			p {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				margin: rhythm(.5) 1em;
+			}
+		}
+	}
+	.frontPage-nav {
+		.top-nav {
+			li {
+				width: 16.66%;
+				-left: 1px solid $bdr-color01;
+				&:first-child {
+					border: none;
+				}
+			}
+		}
+	}
+	#top-point01 {
+		padding-bottom: 30%;
+		background: #ede7e2 url(../images/home-image01.jpg) 50% 100% no-repeat;
+		@include background-size(contain);
+	}
+	#top-groupDiscount {
+		figure {
+			background: url(../images/home-image02.jpg) 100% 100% no-repeat;
+			@include background-size(contain);
+		}
+	}
+	.calendar-body {
+		padding-top: 0;
+	}
+	.newArticles-list {
+		text-align: left;
+		dl {
+			@include rhythm-margins(.5);
+		}
+		dt {
+			clear: left;
+			width: 8em;
+			float: left;
+		}
+		dd {
+			margin-left: 10em;
+		}
+	}
+	#content {
+		margin-bottom: 0;
+	}

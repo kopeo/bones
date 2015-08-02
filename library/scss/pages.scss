@@ -1,0 +1,652 @@
+@import "compass";
+
+// Sass variables
+@import "partials/variables";
+
+// Sass functions
+@import "partials/functions";
+
+// import mixins
+@import "partials/mixins";
+
+.page-template-page-full,
+.page-template-page-staff {
+	#inner-content {
+		padding: 0;
+	}
+	.hentry {
+		border: none;
+		background: transparent;
+	}
+
+}
+	#staffList {
+		margin: 0;
+		li {
+			width: 33.333%;
+			float: left;
+		}
+		img {
+			vertical-align: bottom;
+		}
+	}
+	.staff-profile {
+		hgroup {
+			text-align: center;
+		}
+		.left-column,
+		.right-column {
+			padding: 0 rhythm(1);
+		}
+		dd {
+			@include rhythm-margins(0, 1);
+		}
+	}
+	.mfp-container {
+		span.name {
+			display: none;
+		}
+	}
+
+.page-template-page-full,
+.page-template-default,
+.page-template-page-contact {
+	.hentry {
+		@include rhythm-padding(2, 0);
+	}
+	.article-header {
+		background: darken($tds-blue, 10%);
+		.page-title {
+			color: $white;
+		}
+	}
+}
+
+.section-border {
+	border-top: 1px dashed $border-color;
+	@include rhythm-padding(2);
+}
+
+// CONTACT
+.page-template-page-contact {
+	.form-nav {
+		li {
+			padding-right: 2em;
+			a {
+				@include adjust-font-size-to(20px, 2);
+			}
+		}
+	}
+	#privacypolicy {
+		@include rhythm-padding(1, 0);
+		@include rhythm-margins(1, 0);
+		border-top: 1px dashed #ccc;
+	}
+}
+
+// FEATURE
+	#panel-feature02 {
+		$c: #94c64d;
+		border-color: darken($c, 10%);
+		background: $c;
+	}
+	#panel-feature04 {
+		$c: $bones-blue;
+		border-color: darken($c, 10%);
+		background: $c;
+	}
+
+// PRICE
+.entry-content {
+	.priceTable {
+		tr:nth-child(2n) {
+			background: transparent;
+		}
+	}
+	.priceTable {
+		.price {
+			text-align: right;
+		}
+		.type {
+			text-align: center;
+		}
+		th {
+			text-align: left;
+		}
+		.withTax {
+			@include adjust-font-size-to(12px, 1);
+		}
+	}
+	.priceTotal {
+		margin-bottom: 0;
+		th {
+			text-align: right;
+		}
+	}
+	.totalPrice-detail {
+		display: none;
+	}
+}
+		#totalPrice {
+			font-weight: bold;
+			@include adjust-font-size-to(18px);
+			color: $bones-pink;
+		}
+	#section-priceTotal {
+		h2 {
+			color: $bones-blue;
+		}
+	}
+	#section-payment {
+		h2 {
+			color: $bones-green;
+		}
+	}
+	#certificateStamp-line {
+		display: none;
+	}
+	#shortTerm-line {
+		display: none;
+	}
+	#section-prices {
+		h2 {color: $bones-pink;}
+		.question {
+			margin: 0;
+		}
+		.ui-accordion-header {
+			.note {
+				padding-left: 1em;
+			}
+		}
+	}
+
+// ABOUT US
+.page-template-page-full {
+	.cbp_tmtimeline {
+		> li {
+			.cbp_tmicon {
+				.fa {
+					z-index: 1;
+				}
+			}
+		}
+	}
+}
+	#panel-aboutus-information {
+		text-align: left;
+	}
+	#information-data {
+		@include rhythm-margins(0, 1);
+	}
+		#gMap {
+			width: 100%;
+			height: 100%;
+		}
+	#aboutus-history {
+		background: #eff9ff;
+	}
+	#aboutus-information {
+	}
+
+// SHORT COURSE
+.entry-content {
+	.courseTable {
+		tr:nth-child(even) {
+			background-color: $white;
+		}
+	}
+	th.sub-th {
+		background-color: $light-gray;
+	}
+}
+	#shortCourse-motorcycle50cc h2 {
+		color: $bones-carrot;
+	}
+	#shortCourse-elder h2 {
+		color: $bones-purple;
+	}
+
+
+// FAQ
+	#faq-body-container {
+		min-height: 300px;
+	}
+	#faq-body {
+		margin-left: 0;
+		> li {
+			display: block;
+			list-style: outside none;
+		}
+			.faq-item {
+				padding-left: 3.5em;
+				dt, dd {
+					position: relative;
+					> .fa {
+						position: absolute;
+						top: rhythm(-.5);
+						left: -2em;
+						@include adjust-font-size-to(22px, 2);
+						&:before {
+							padding-right: .2em;
+							@include adjust-font-size-to(14px, 2);
+						}
+					}
+				}
+				dt {
+					border-bottom: 1px solid #fff;
+					> .fa {
+						color: lighten($bones-pink, 30%);
+					}
+					&.hover {
+						color: darken($text-color, 5%);
+						border-color: lighten($bones-pink, 30%);
+					}
+					&.active {
+						font-weight: bold;
+					}
+				}
+				dd {
+					@include rhythm-margins(1, 2);
+					@include rhythm-padding(0, .5);
+					border-left: 3px solid lighten($bones-blue, 40%);
+					padding-left: 1em;
+					> .fa {
+						color: lighten($bones-blue, 30%);
+					}
+					ul:last-child,
+					table:last-child,
+					p:last-child {
+						margin-bottom: 0;
+					}
+				}
+			}
+		.planChangeExample {
+			padding-left: 10px;
+			li {
+				list-style: none;
+				text-indent: -10px;
+				.fa {
+					@include adjust-font-size-to(20px, 2);
+				}
+				.fa-circle-o {
+					color: lighten($bones-pink, 20%);
+				}
+				.fa-close {
+					color: darken($gray, 30%);
+				}
+			}
+		}
+	}
+
+// FLOW
+
+$flowColor01: darken($tds-blue, 20%);
+$flowColor02: $bones-green;
+$flowColor03: darken($bones-orange, 25%);
+$flowColor04: $bones-pink;
+
+#flow-container {padding-bottom: rhythm(2);}
+#flow-timeline-container {
+	min-height: 300px;
+	// Overwrite default style
+	.cbp_tmtimeline {
+		&:before {
+			background: $gray;
+		}
+		> li .cbp_tmtime span {
+			color: $text-color;
+		}
+
+		// coloring by step
+		> li#chart-1stStep {
+			.cbp_tmicon {
+				background: $flowColor01;
+				box-shadow: 0 0 0 8px lighten($flowColor01, 15%);
+			}
+			.cbp_tmlabel:after {
+				border-bottom-color: $flowColor01;
+			}
+			.cbp_tmlabel {
+				background: $flowColor01;
+			}
+		}
+		> li#chart-completedTest {
+			.cbp_tmicon {
+				background: $flowColor02;
+				box-shadow: 0 0 0 8px lighten($flowColor02, 15%);
+			}
+			.cbp_tmlabel:after {
+				border-bottom-color: $flowColor02;
+			}
+			.cbp_tmlabel {
+				background: $flowColor02;
+			}
+		}
+		> li#chart-2ndStep {
+			.cbp_tmicon {
+				background: $flowColor03;
+				box-shadow: 0 0 0 8px lighten($flowColor03, 15%);
+			}
+			.cbp_tmlabel:after {
+				border-bottom-color: $flowColor03;
+			}
+			.cbp_tmlabel {
+				background: $flowColor03;
+			}
+		}
+		> li#chart-graduationTest {
+			.cbp_tmicon {
+				background: $flowColor04;
+				box-shadow: 0 0 0 8px lighten($flowColor04, 15%);
+			}
+			.cbp_tmlabel:after {
+				border-bottom-color: $flowColor04;
+			}
+			.cbp_tmlabel {
+				background: $flowColor04;
+			}
+		}
+	}
+	.course-motorcycle {
+		display: none;
+	}
+
+	// parts style
+	.cbp_tmlabel {
+		> ol {
+			margin: 0;
+
+			li {
+				list-style: none;
+			}
+		}
+		dl {
+			margin: 0;
+			.hover {
+				background: rgba(0, 0, 0, .1);
+			}
+			dd {
+				padding-top: rhythm(.5);
+			}
+		}
+		.chart-arrow {
+			height: rhythm(2.5);
+			position: relative;
+			span {
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				margin: -21px 0 0 -17px;
+				line-height: rhythm(2);
+			}
+			.fa {
+				@include adjust-font-size-to(40px, 2);
+				@include opacity(.3);
+			}
+		}
+		.gotoNext {
+			font-weight: bold;
+			span {
+				@include border-radius(14px);
+				padding: rhythm(.25) 1em;
+				background: rgba(0, 0, 0, .2);
+			}
+		}
+		table {
+			thead {
+				th {
+					background: rgba(255, 255, 255, .25);
+				}
+			}
+			tbody {
+				th {
+					background: rgba(255, 255, 255, .15);
+				}
+				tr:nth-child(even) {
+					background: transparent;
+				}
+			}
+		}
+	}
+	.chart-item-index {
+		text-align: center;
+		// @include rhythm-padding(1);
+		@include adjust-font-size-to(20px, 3);
+		.fa:first-child {
+			@include adjust-font-size-to(35px, 3);
+		}
+	}
+}
+
+@media only screen and (min-width: 481px) {
+}
+
+@media only screen and (min-width: 768px) {
+
+	.billboard {
+		text-align: left;
+	}
+
+	// スタッフプロフィール
+	#profile-container {
+		background: $brown;
+		color: $white;
+		height: 456px; // ローディング時に最初のコンテンツをdisplay:noneにするため、高さが変わらないように固定しておく
+		overflow: hidden;
+		.fa {
+			color: $white;
+		}
+		.billboard {
+			.page-title {
+				color: $white;
+			}
+			.panel-body {
+				height: 330px;
+			}
+			figure {
+				width: 50%;
+				background: url(../images/bg-panel-staff.jpg) 0 0 no-repeat;
+				@include background-size(contain);
+			}
+		}
+		.staff-profile {
+			dl {
+				margin-top: 0;
+			}
+			// position: relative;
+			.left-column {
+				padding: 0;
+				width: 40%;
+				float: left;
+			}
+			header {
+				padding: 0;
+			}
+			.right-column {
+				padding: 0;
+				width: 55%;
+				float: right;
+			}
+		}
+	}
+	.staff-profile {
+		width: 100%;
+		text-align: left;
+		dt, dd {
+			@include rhythm-margins(.5, 0);
+			&.recommended {
+				float: none;
+				width: auto;
+			}
+		}
+		dt {
+			clear: left;
+			width: 10em;
+			float: left;
+		}
+		dd {
+			margin-left: 11em;
+			&.recommended {
+				margin: 0;
+			}
+		}
+		.message {
+			@include border-radius(8px);
+			padding: rhythm(.5);
+			background: rgba(0, 0, 0, .2);
+			position: relative;
+		}
+		figure img {
+			border: 3px solid $white;
+			@include box-shadow(0 0 4px rgba(0, 0, 0, .3));
+			@include rotate(2deg);
+		}
+	}
+	#staffList {
+		li {
+			width: auto;
+			float: none;
+		}
+	}
+	#panel-staff01 {
+		figure {
+			background: url(/wp-content/uploads/contents/panel-staff01.jpg) 100% 0 no-repeat;
+		}
+	}
+
+	// 特徴
+	#panel-feature01 {
+		figure {
+			background: url(../images/panel-feature01_pc.jpg) 50% 0 no-repeat;
+		}
+		header,
+		.panel-sentence {
+			margin-right: 40%;
+		}
+	}
+	#panel-feature02 {
+		figure {
+			background: url(../images/panel-feature02_pc.png) 100% 0 no-repeat;
+		}
+	}
+	#panel-feature03 {
+		figure {
+			background: url(../images/panel-feature03_pc.jpg) 0 50% no-repeat;
+		}
+	}
+	#panel-feature04 {
+		figure {
+			background: url(../images/panel-feature04_pc.jpg) 50% 100% no-repeat;
+		}
+	}
+
+	// ABOUT US
+	#panel-aboutus-idea {
+		figure {
+			background: url(../images/panel-aboutus01_pc.jpg) 50% 100% no-repeat;
+		}
+	}
+
+	// デフォルトテンプレート
+	// ヘッダを外に出す
+	.page-template-page-full,
+	.page-template-default,
+	.page-template-page-contact {
+		.article-header {
+			@include rhythm-padding(1);
+			border-bottom: 1px solid $bdr-color01;
+			background: url(../images/bg-page-title.jpg) 50% 0 no-repeat;
+			@include background-size(cover);
+			.page-title {
+				@include index($color-yellow, $white);
+			}
+		}
+	}
+}
+@media only screen and (min-width: 1030px) {
+
+	#profile-container {
+		.staff-profile {
+			.left-column {
+				width: 50%;
+			}
+			.right-column {
+				width: 45%;
+			}
+		}
+	}
+
+	// PRICE
+	#section-prices {
+		.prerequisite {
+			padding-right: 200px;
+		}
+	}
+		#price-car01-container {
+			background: url(../images/price01.jpg) 97% 30px no-repeat;
+		}
+		#price-car02-container {
+			background: url(../images/price02.jpg) 97% 30px no-repeat;
+		}
+		#price-business-container {
+			background: url(../images/price03.jpg) 97% 30px no-repeat;
+		}
+		#price-motorcycleLarge-container {
+			background: url(../images/price04.jpg) 97% 30px no-repeat;
+		}
+		#price-motorcycle-container {
+			background: url(../images/price05.jpg) 97% 30px no-repeat;
+		}
+
+	// ABOUT US
+		#information-map {
+			position: absolute;
+			right: 0;
+			top: rhythm(3);
+		}
+
+	// FLOW
+	#flow-timeline-container {
+		// Overwrite default style
+		.cbp_tmtimeline {
+			// coloring by step
+			> li#chart-1stStep {
+				.cbp_tmlabel:after {
+					border-bottom-color: transparent;
+					border-right-color: $flowColor01;
+				}
+			}
+			> li#chart-completedTest {
+				.cbp_tmlabel:after {
+					border-bottom-color: transparent;
+					border-right-color: $flowColor02;
+				}
+			}
+			> li#chart-2ndStep {
+				.cbp_tmlabel:after {
+					border-bottom-color: transparent;
+					border-right-color: $flowColor03;
+				}
+			}
+			> li#chart-graduationTest {
+				.cbp_tmlabel:after {
+					border-bottom-color: transparent;
+					border-right-color: $flowColor04;
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (min-width: 1280px) {
+
+	#panel-staff01 {
+		figure {
+			@include background-size(contain);
+		}
+	}
+}
+
+@media only screen and (min-width: 1440px) {
+
+}

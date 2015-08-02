@@ -1,6 +1,10 @@
-			<footer class="footer" role="contentinfo" itemscope itemtype="http://schema.org/WPFooter">
+<?php
+global $url,$tpldir, $tel, $telFree, $address;
+if(!isset($_GET['iframe'])): ?>
 
-				<div id="inner-footer" class="wrap cf">
+			<footer class="footer bg-dark cf" role="contentinfo" itemscope itemtype="http://schema.org/WPFooter">
+
+				<div id="inner-footer" class="wrap wrap-full cf">
 
 					<nav role="navigation">
 						<?php wp_nav_menu(array(
@@ -18,7 +22,25 @@
 						)); ?>
 					</nav>
 
-					<p class="source-org copyright">&copy; <?php echo date('Y'); ?> <?php bloginfo( 'name' ); ?>.</p>
+					<div id="reserveTour">
+						まずは気軽に見に来てください♪<br>
+						<a href="<?php echo $tpldir; ?>/popup-form.php?type=reserveTour" class="form-ajax-popup btn__ghostWhite">WEBで見学申し込み</a>
+					</div>
+
+					<address class="footer-contact-info emboss">
+						<ul class="block-link">
+							<li class="author">
+								<span class="approval"><?php echo bloginfo('description'); ?></span>
+								<span class="name"><?php echo bloginfo('name'); ?></span>
+							</li>
+							<li class="address"><?php echo nl2br($address); ?></li>
+							<li class="tel tel-free"><i class="fa fa-phone fa-fw"></i><?php echo $telFree; ?></li>
+							<!-- <li class="tel"><i class="fa fa-phone fa-fw"></i><?php echo $tel; ?></li> -->
+						</ul>
+					</address>
+
+					<?php echo createOriginalSBM($url); ?>
+					<p class="source-org copyright">&copy; <?php echo date('Y'); ?> <?php bloginfo( 'name' ); ?> All Rights Reserved.</p>
 
 				</div>
 
@@ -30,8 +52,14 @@
 	<div id="outerClickLayer"></div>
 	<a id="side-menu-trigger" href="javascript:void(0)"><i class="fa fa-list"></i></a>
 	<div id="side-menu" class="bg-dark">
-		<div class="side-menu-body">
+		<div class="sideMenu-buttons">
+			<a href="javascript:void(0)" id="sideMenu-close"><i class="fa fa-angle-right"></i></a>
+			<a href="javascript:void(0)" id="sideMenu-searchform-trigger"><i class="fa fa-search"></i></a>
+		</div>
+		<div id="side-searchform" class="emboss side-menu-widget">
 		<?php get_search_form(); ?>
+		</div>
+		<div class="side-menu-body side-menu-widget">
 		<?php wp_nav_menu(array(
 			'menu' => 'side_menu',
 			'container' => false,
@@ -39,7 +67,5 @@
 		)); ?>
 		</div>
 	</div>
+<?php endif; ?>
 	<?php wp_footer(); ?>
-	</body>
-
-</html> <!-- end of site. what a ride! -->

@@ -52,6 +52,10 @@ http://www.youtube.com/watch?v=hwdVpKiJzac
     top: 1px; // adds a tiny hop to the click
   } // end active
 
+  &[disabled] {
+    background: #ccc !important;
+    color: #777 !important;
+  }
 } // end .button
 
 /*
@@ -70,6 +74,68 @@ and it will create a button dependant on those variables.
 
   &:active {
     background-color: darken($blue, 5%);
+  } // end active
+
+} // end blue button
+
+.btn__gray {
+  @extend %btn; // here we load the btn defaults
+  background-color: #aaa;
+
+  &:hover,
+  &:focus {
+    background-color: darken($tds-blue, 4%);
+  } // end hover
+
+  &:active {
+    background-color: darken($tds-blue, 5%);
+  } // end active
+
+} // end gray button
+
+.btn__pink {
+  @extend %btn; // here we load the btn defaults
+  background-color: $bones-pink;
+
+  &:hover,
+  &:focus {
+    background-color: darken($bones-pink, 4%);
+  } // end hover
+
+  &:active {
+    background-color: darken($bones-pink, 5%);
+  } // end active
+
+} // end pink button
+
+.btn__green {
+  @extend %btn; // here we load the btn defaults
+  background-color: $bones-green;
+
+  &:hover,
+  &:focus {
+    background-color: darken($bones-green, 4%);
+  } // end hover
+
+  &:active {
+    background-color: darken($bones-green, 5%);
+  } // end active
+
+} // end green button
+
+.btn__ghostWhite {
+  @extend %btn; // here we load the btn defaults
+  background-color: transparent;
+  border: 1px solid $white;
+
+  &:hover,
+  &:focus {
+    background-color: $white;
+    color: #222 !important;
+  } // end hover
+
+  &:active {
+    background-color: darken($white, 2%);
   } // end active
 
 } // end blue button

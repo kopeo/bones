@@ -38,7 +38,7 @@ input[type="color"],
 select,
 textarea,
 .field {
-  display: block;
+  display: inline-block;
   height: 40px;
   line-height: 1em;
   padding: 0 12px;
@@ -59,7 +59,8 @@ textarea,
   &:focus,
   &:active {
     background-color: lighten($gray, 4%);
-    outline: none; 
+    outline: none;
+    border: 1px solid $bdr-color01;
   } // end hover or focus
 
   // error notification
@@ -112,6 +113,7 @@ textarea {
   max-width: 100%;
   min-height: 120px;
   line-height: 1.5em;
+  @include rhythm-padding(.5, 0);
 }
 
 // selects
@@ -123,4 +125,7 @@ select {
   background-position: 97.5% center;
 }
 
+label {
+  padding-left: .5em;
+}
 

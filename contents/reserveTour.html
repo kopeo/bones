@@ -1,0 +1,19 @@
+<h3>見学予約の受付</h3>
+<p><span class="attention note">（※）</span>は必須項目です。</p>
+<h5>ご連絡先<span class="attention note">（※）</span></h5>
+<p class="note">ご予約確認のためご記入をお願いいたしております。</p>
+<dl class="privacyData cf" style="margin-bottom: 0;">
+	<dt><label for="your-name">お名前</label></dt>
+	<dd>[text* your-name id:your-name]</dd>
+	<dt><label for="your-phone">電話番号</label></dt>
+	<dd>[tel* tel-496 id:your-phone placeholder "090-1234-5678"]</dd>
+</dl>
+<div class="reserveDate" class="cf">
+<h5>見学ご希望日時<span class="attention note">（※）</span></h5>
+<div>[date* date-632 id:reserveDate class:inline-form min:2013-01-01 max:today+10days min:today+1days placeholder "2015-08-01"] [number* hour id:reserveHour class:inline-form min:9 max:19 "10"] 時頃</div>
+	<p class="note">ご希望の日時によってはご案内できないこともございます。スタッフからのご連絡をお待ちください。</p>
+</div>
+<h5>その他ご希望など</h5>
+[textarea your-message]
+<p>[submit class:btn__blue "送信"]</p>
+[acceptance acceptance-895 id:accept class:inline-form]<label for="accept">確認ページはございませんので、送信前にもう一度内容をご確認の上、チェックを入れてから送信してください。</label>

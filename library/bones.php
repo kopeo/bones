@@ -119,46 +119,50 @@ SCRIPTS & ENQUEUEING
 
 // loading modernizr and jquery, and reply script
 function bones_scripts_and_styles() {
+	global $tpldir, $wp_styles; // call global $wp_styles variable to add conditional wrapper around ie stylesheet the WordPress way
 
-  global $tpldir, $wp_styles; // call global $wp_styles variable to add conditional wrapper around ie stylesheet the WordPress way
+	if (!is_admin()) {
 
-  if (!is_admin()) {
 
+		wp_enqueue_script( 'jquery' );
+		/*
+		development source
+		*/
+		// {{SRC
 		// modernizr (without media query polyfill)
-		wp_register_script( 'bones-modernizr', get_stylesheet_directory_uri() . '/library/js/libs/modernizr.custom.min.js', array(), '2.5.3', false );
-
-		// register main stylesheet
-		wp_register_style( 'bones-stylesheet', get_stylesheet_directory_uri() . '/library/css/style.css', array(), '', 'all' );
-
-		//owl carousel
+		wp_enqueue_script( 'bones-modernizr', $tpldir .'/js/libs/modernizr.custom.min.js', array(), '2.5.3', false );
+		// jQuery UI
+		wp_enqueue_script( 'jqueryUI',  $tpldir . "/js/jquery-ui.min.js", array('jquery'));
+		// wp_enqueue_script( 'skrollr',  $tpldir . "/js/skrollr.min.js", array('jquery'), '', true);
+		wp_enqueue_script( 'perfectScrollBar',  $tpldir . "/js/perfect-scrollbar.min.js", array('jquery'), '', true);
+		wp_enqueue_script( 'magnificPopup',  $tpldir . "/js/jquery.magnific-popup.min.js", array('jquery'), '', true);
 		wp_enqueue_script( 'carousel',  $tpldir . "/js/owl.carousel.min.js", array('jquery'), '', true);
-
-		// ie-only style sheet
-		wp_register_style( 'bones-ie-only', get_stylesheet_directory_uri() . '/library/css/ie.css', array(), '' );
-
-    // comment reply script for threaded comments
-    if ( is_singular() AND comments_open() AND (get_option('thread_comments') == 1)) {
-		  wp_enqueue_script( 'comment-reply' );
-    }
-
-		//adding scripts file in the footer
-		wp_register_script( 'bones-js', get_stylesheet_directory_uri() . '/library/js/scripts-common.js', array( 'jquery' ), '', true );
-
-		// enqueue styles and scripts
-		wp_enqueue_script( 'bones-modernizr' );
-		wp_enqueue_style( 'bones-stylesheet' );
-		wp_enqueue_style( 'bones-ie-only' );
-
-		$wp_styles->add_data( 'bones-ie-only', 'conditional', 'lt IE 9' ); // add conditional wrapper around ie stylesheet
+		if ( !is_mobile()) {
+			// wp_enqueue_script( 'tooltip',  $tpldir . "/js/jTip.js", array('jquery'), '', true);
+			// wp_enqueue_script( 'menuAim',  $tpldir . "/js/jquery.menu-aim.min.js", array('jquery'), '', true);
+		}
+		wp_enqueue_script( 'bones-common', $tpldir .'/js/scripts-common.js', array('jquery', 'magnificPopup', 'carousel'), '0.1', true );
+			// SRC}}
 
 		/*
-		I recommend using a plugin to call jQuery
-		using the google cdn. That way it stays cached
-		and your site will load faster.
+		release source
 		*/
-		wp_enqueue_script( 'jquery' );
-		wp_enqueue_script( 'bones-js' );
+		// header script (jQueryUI & modernizr)
+		/* {{DEST
+		wp_enqueue_script( 'bones-common', $tpldir .'/js/scripts.min.js', array( 'jquery' ), '', true );
+		DEST}} */
 
+		/*
+		STYLE SHEETS
+		*/
+		// register main stylesheet
+		wp_register_style( 'bones-stylesheet', $tpldir .'/css/style.css', array(), '', 'all' );
+		// ie-only style sheet
+		wp_register_style( 'bones-ie-only', $tpldir .'/css/ie.css', array(), '' );
+		// enqueue style
+		wp_enqueue_style( 'bones-stylesheet' );
+		wp_enqueue_style( 'bones-ie-only' );
+		$wp_styles->add_data( 'bones-ie-only', 'conditional', 'lt IE 9' ); // add conditional wrapper around ie stylesheet
 	}
 }
 
@@ -289,6 +293,10 @@ RANDOM CLEANUP ITEMS
 
 // remove the p from around imgs (http://css-tricks.com/snippets/wordpress/remove-paragraph-tags-from-around-images/)
 function bones_filter_ptags_on_images($content){
+	// {{SRC
+	$content = preg_replace('/(src="\/wp-content\/themes\/)tds(\/library\/images\/.+?">)/','\1tds-bones\2', $content);
+	// SRC}}
+
 	return preg_replace('/<p>\s*(<a .*>)?\s*(<img .* \/>)\s*(<\/a>)?\s*<\/p>/iU', '\1\2\3', $content);
 }
 
@@ -298,7 +306,4 @@ function bones_excerpt_more($more) {
 	// edit here if you like
 	return '...  <a class="excerpt-read-more" href="'. get_permalink( $post->ID ) . '" title="'. __( 'Read ', 'bonestheme' ) . esc_attr( get_the_title( $post->ID ) ).'">'. __( 'Read more &raquo;', 'bonestheme' ) .'</a>';
 }
-
-
-
 ?>

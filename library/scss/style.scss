@@ -63,6 +63,25 @@ you hate oysters, then the world is your peanut butter & jelly sandwich.
 // font awesome
 @import "../font-awesome/scss/font-awesome.scss";
 
+// magnific popup
+@import "modules/_jquery-ui.structure";
+
+// magnific popup
+@import "modules/magnific-popup";
+
+// owl carousel
+@import "modules/owl-carousel";
+
+// perfect scrollbar
+@import "modules/perfect-scrollbar";
+
+// contactform7
+@import "modules/_contact-form7.scss";
+
+// BLUE PRINT Vertical Timeline
+@import "modules/vertical-timeline";
+
+
 /*********************
 BASE (MOBILE) SIZE
 This are the mobile styles. It's what people see on their phones. If
@@ -109,10 +128,10 @@ This is the average viewing window. So Desktops, Laptops, and
 in general anyone not viewing on a mobile device. Here's where
 you can add resource intensive styles.
 *********************/
-@media only screen and (min-width: 1030px) {
+@media only screen and (min-width: 1080px) {
 
 	// styles in 1030up.scss
-	@import "breakpoints/1030up";
+	@import "breakpoints/1080up";
 
 } // end of media query
 
@@ -124,6 +143,13 @@ This is for the larger monitors and possibly full screen viewers.
 
 	// styles in 1240up.scss
 	@import "breakpoints/1240up";
+
+} // end of media query
+
+@media only screen and (min-width: 1440px) {
+
+	// styles in 1240up.scss
+	@import "breakpoints/1440up";
 
 } // end of media query
 

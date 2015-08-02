@@ -37,6 +37,29 @@ over your project's layout.
   padding-right: 0 !important;
 }
 
+/*
+GALLERY
+*/
+.gallery-columns-2 .gallery-item {
+  @include grid-col;
+  width: 50%;
+}
+.gallery-columns-3 .gallery-item,
+.gallery-columns-6 .gallery-item,
+.gallery-columns-9 .gallery-item {
+  @include grid-col;
+  width: 33.33%;
+}
+.gallery-columns-4 .gallery-item,
+.gallery-columns-8 .gallery-item,
+.gallery-columns-7 .gallery-item {
+  @include grid-col;
+  width: 25%;
+}
+.gallery-columns-5 .gallery-item {
+  @include grid-col;
+  width: 20%;
+}
 
 /*
 Mobile Grid Styles
@@ -79,6 +102,20 @@ them however you see fit.
 
 } // end mobile styles
 
+@media only screen and (min-width: 768px) {
+  .gallery-columns-6 .gallery-item {
+    width: 16.66%;
+  }
+  .gallery-columns-7 .gallery-item {
+    width: 14.28%;
+  }
+  .gallery-columns-8 .gallery-item {
+    width: 12.5%;
+  }
+  .gallery-columns-9 .gallery-item {
+    width: 11.11%;
+  }
+}
 
 /* Portrait tablet to landscape */
 @media (min-width: 768px) and (max-width: 1029px) {
@@ -228,6 +265,14 @@ them however you see fit.
   .d-1of8 {
     @include grid-col;
     width: 12.5%;
+  }
+  .d-3of8 {
+    @include grid-col;
+    width: 37.5%;
+  }
+  .d-5of8 {
+    @include grid-col;
+    width: 62.5%;
   }
 
   .d-1of9 {

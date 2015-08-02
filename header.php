@@ -1,5 +1,5 @@
 <?php
-global $tpldir;
+global $tpldir, $telFree;
 ?>
 <!doctype html>
 
@@ -22,15 +22,15 @@ global $tpldir;
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
 
 		<?php // icons & favicons (for more: http://www.jonathantneal.com/blog/understand-the-favicon/) ?>
-		<link rel="apple-touch-icon" href="<?php echo get_template_directory_uri(); ?>/library/images/apple-touch-icon.png">
+		<link rel="apple-touch-icon" href="<?php echo get_template_directory_uri(); ?>/apple-touch-icon.png">
 		<link rel="icon" href="<?php echo get_template_directory_uri(); ?>/favicon.png">
 		<!--[if IE]>
 			<link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/favicon.ico">
 		<![endif]-->
 		<?php // or, set /favicon.ico for IE10 win ?>
-		<meta name="msapplication-TileColor" content="#f01d4f">
+		<meta name="msapplication-TileColor" content="#496cbd">
 		<meta name="msapplication-TileImage" content="<?php echo get_template_directory_uri(); ?>/library/images/win8-tile-icon.png">
-            <meta name="theme-color" content="#121212">
+            <meta name="theme-color" content="#aee9ed">
 
 		<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
 
@@ -68,32 +68,42 @@ if (is_single() || is_page()){//投稿記事か固定ページの場合
 	}
 }
 if( !$img['flag'] ){
-	echo '<meta property="og:image" content="' .$tpldir .'/library/images/fb-sekishoukai.jpg">';echo "\n";
+	echo '<meta property="og:image" content="' .$tpldir .'/images/fb-ogp.jpg">';echo "\n";
 }
 ?>
 <!--OGP完了-->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
+  ga('create', 'UA-65259363-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 	</head>
 
 	<body <?php body_class(); ?> itemscope itemtype="http://schema.org/WebPage">
 
 		<div id="container">
+<?php if(!isset($_GET['iframe'])): ?>
 			<header class="header" role="banner" itemscope itemtype="http://schema.org/WPHeader">
 				<div class="inner-header wrap cf">
 					<div class="head-branding wrap cf">
-						<div class="head-branding-body m-all t-1of3 d-1of2">
+						<div class="head-branding-body m-all t-1of3 d-3of8">
 						<?php // to use a image just replace the bloginfo('name') with your img src and remove the surrounding <p> ?>
 							<p id="discription"><?php echo bloginfo('description'); ?></p>
 							<p id="logo" class="h1" itemscope itemtype="http://schema.org/Organization"><a href="<?php echo home_url(); ?>" rel="nofollow"><?php bloginfo('name'); ?></a></p>
 						</div>
 
-						<div class="head-download m-all t-1of3 d-1of4">
-							<a href="test.pdf" class="btn__blue">資料請求・お問合せ</a>
+						<div class="head-download m-all t-1of3 d-3of8">
+							<a href="<?php echo $url; ?>/contact/" class="btn__blue">資料請求・お問合せ</a>
 						</div>
 
-						<div class="head-contact m-all t-1of3 d-1of4">
-							<span class="phoneNumber"><i class="fa fa-phone"></i>0875−72−5623</span>
-							営業時間：9:00〜18:00
+						<div class="head-contact m-all t-1of3 d-1of4 last-col">
+							<span class="phoneNumber"><i class="fa fa-phone"></i><?php echo $telFree; ?></span>
+							営業時間：8:30〜18:20
 						</div>
 					</div>
 
@@ -114,3 +124,4 @@ if( !$img['flag'] ){
 					</nav>
 				</div>
 			</header>
+<?php endif; ?>

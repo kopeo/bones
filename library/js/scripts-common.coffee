@@ -16,7 +16,6 @@ SKROLLR
 モバイルでは難しい。。。
 ###
 # s = skrollr.init({forceHeight: false});
-# console.log "test"
 ###
  * Get Viewport Dimensions
  * returns object with viewport dimensions to match css in width and height properties
@@ -41,7 +40,6 @@ viewport = updateViewportDimensions();
  * ( source: http://stackoverflow.com/questions/2854407/javascript-jquery-window-resize-how-to-fire-after-the-resize-is-completed )
 ###
 # waitForFinalEvent = do ->
-#   console.log "wait"
 #   timers = {};
 #   (callback, ms, uniqueId) ->
 #     if !uniqueId
@@ -70,8 +68,6 @@ do($ = jQuery) ->
         timers[uniqueId] = setTimeout callback, ms
         return
     getFooterOffsetY : ->
-      # console.log "footer:" + $(".footer").outerHeight(true)
-      # console.log "document:" + $(document).height()
       footerOffsetY = $(document).height() - $(".footer").outerHeight(true) # - $gotoTop.outerHeight(true)
       return
   });
@@ -133,7 +129,7 @@ do($ = jQuery) ->
       this.complete
     .length > 0
 
-  $gotoTop = $("#gotoTop")
+  $sbm = $(".sbm-container")
   $pf = $('#product-footer-nav')
   $HH = $('.home .header')
   $SM = $("#side-menu")
@@ -148,6 +144,20 @@ do($ = jQuery) ->
      * You can remove this if you don't need it
     ###
     loadGravatars()
+
+    ###
+    HOME CALENDAR
+    ###
+    $cal = $('.home .business-calendar-box').children('div')
+    if $cal.length == 2
+      $cal.last().hide()
+      $('.changeMonth-item').on 'click', ->
+        # $(@).addClass('hide')
+        $('.changeMonth-item').each ->
+          $(@).toggleClass('hide')
+        $cal.each ->
+          $(@).stop().toggle()
+        return
 
     ###
     SMOOTH SCROLL
@@ -165,29 +175,24 @@ do($ = jQuery) ->
     SCROLL FINISHED BIND
     ###
     timerId = 0
-    floatingMenu = (s) ->
+    floatingSBM = (s) ->
       # ロード後のscriptなどでheightが変わることがあるため、毎回実施
       $.getFooterOffsetY()
 
       # if footerOffsetY == 0
       #   $.getFooterOffsetY()
-      # console.log $(window).outerHeight(true) + "-" + footerOffsetY
-      # console.log "innerH:" + window.innerHeight
-      # console.log "jqueryH:" + $(window).outerHeight(true)
       y = if window.innerHeight then window.innerHeight else $(window).outerHeight(true)
-      # console.log $(window).outerHeight(true);
       y = s + y - footerOffsetY
-      d = 20
-      if $pf?
-        d += $pf.outerHeight(true)
+      d = 10
+      # if $pf?
+      #   d += $pf.outerHeight(true)
       $_to = if y < 0 then d else d + y
-      $gotoTop.css( 'bottom', $_to + "px")
-      if $pf?
-        $_to = if y < 0 then 0 else y
-        $pf.css 'bottom', $_to
-        $pf.fadeIn();
-      if s > 300
-        $gotoTop.fadeIn()
+      $sbm.css( 'bottom', $_to + "px")
+      # if $pf?
+      #   $_to = if y < 0 then 0 else y
+      #   $pf.css 'bottom', $_to
+      #   $pf.fadeIn();
+      $sbm.fadeIn()
       return
 
     ###
@@ -197,35 +202,51 @@ do($ = jQuery) ->
     #   さらに、ヘッダの高さをトップページ用から通常サイズへ
     #   同時にサイドメニューのトリガーの位置調整も行う。
     showSideMenuTrigger = ->
-      $y = $('.header').outerHeight() + 21;
+      $y = $('.header').outerHeight() + 10;
       $('#side-menu-trigger').css("top", $y).fadeIn();
       return
-    headerControl = (s) ->
+    desktopToolsControl = (s) ->
+      if s < 0
+        s = $(document).scrollTop()
       if $HH.length
         $n = $('.head-nav')
-        $('.head-branding').animate {'height': if s > 200 then 80 else 300 }, ->
+        $('.head-branding').animate {'height': if s > 10 then 80 else 300 }, ->
+          do showSideMenuTrigger
           # if $('.header').offset().top > 10000
-          if $('.frontPage-nav').offset().top - $('.header').outerHeight()  < s
-            if !$n.hasClass("bond")
-              $('.head-nav').slideDown 'fast', ->
-                $n.addClass("bond")
-                do showSideMenuTrigger
-                return
-            else
-              do showSideMenuTrigger
-          else
-            if $n.hasClass("bond")
-              $('.head-nav').slideUp 'fast', ->
-                $n.removeClass("bond")
-                do showSideMenuTrigger
-                return
-            else
-              do showSideMenuTrigger
           return
+        if $('.frontPage-nav').offset().top - $('.header').outerHeight()  < s
+          if !$n.hasClass("bond")
+            $n.fadeIn 'fast', ->
+              $n.addClass("bond")
+              return
+        else
+          if $n.hasClass("bond")
+            $n.fadeOut 'fast', ->
+              $n.removeClass("bond")
+              return
       else
         do showSideMenuTrigger
+
+      # SBM
+      floatingSBM(s)
       return
-    headerControl 0
+
+    ###
+    SHOW IMG EXPRAIN
+    ###
+    $('.overLayer').on
+      'mouseenter': ->
+        $(@).find('.overLayer-target').stop().animate
+          "top": "0%"
+        , 'fast'
+        return
+      'mouseleave': ->
+        $(@).find('.overLayer-target').stop().animate
+          "top": "100%"
+        , 'fast'
+        return
+    , "a"
+
 
     ###
     READ MORE
@@ -256,13 +277,12 @@ do($ = jQuery) ->
 
     # スクロール停止イベントのバインド
     $(window).on 'scrollFinish', (event, scrollTop) ->
-      # メニュー移動処理呼び出し
-      floatingMenu(scrollTop)
+      # PC/MOBILE共通のメニュー移動処理呼び出し
+      # floatingMenu(scrollTop)
       return
     # スクロールイベントのバインド
     $(window).on 'scroll', ->
       scrollTop = $(document).scrollTop();
-      $gotoTop.stop().hide()
       $pf.stop().hide()
       if (timerId)
         clearTimeout(timerId);
@@ -281,7 +301,22 @@ do($ = jQuery) ->
     MAGIC POPUP
     ###
     #dialog
-    # $closeHTML = '<button title="%title%" class="mfp-close"><i class="gi gi-close-alt"></i>'
+    $closeHTML = '<button title="%title%" class="mfp-close"><i class="fa fa-close"></i>'
+
+    #popup form
+    $('.form-ajax-popup').magnificPopup
+      type: 'ajax',
+      closeMarkup: $closeHTML
+      closeBtnInside: false
+      fixedContentPos: true
+      callbacks:
+        ajaxContentAdded: ->
+          $('.mfp-container div.wpcf7 > form').wpcf7InitForm()
+          $form = $(@.content)
+          $form.find(".privacypolicy-container").perfectScrollbar
+            suppressScrollX: true #hide horizontal scrollbar
+          return
+
     # $('.popup-dialog-trigger').magnificPopup({
     #   type: 'inline',
     #   fixedContentPos: false,
@@ -315,57 +350,45 @@ do($ = jQuery) ->
     #   }
     # })
 
-    #popup form
-    # $('.form-ajax-popup').magnificPopup({
-    #   type: 'ajax',
-    #   closeMarkup: $closeHTML
-    #   closeBtnInside: false
-    #   fixedContentPos: true
-    #   callbacks:
-    #     ajaxContentAdded: ->
-    #       $('.mfp-container div.wpcf7 > form').wpcf7InitForm();
-    #       $form = $(@.content)
-    #       d = $form.attr("data-default")
-    #       $form.find("#product").val(d);
-    #       $form.find(".privacypolicy-body").perfectScrollbar();
-    #       return
-    # })
 
-    # #popup gallery
-    # $('.gallery').magnificPopup({
-    #   delegate: "a"
-    #   type: "image"
-    #   closeOnContentClick: false
-    #   closeMarkup: $closeHTML
-    #   closeBtnInside: false
-    #   mainClass: "mfp-with-zoom mfp-img-mobile"
-    #   image: {
-    #     verticalFit: true
-    #     titleSrc: (item) ->
-    #       item.el.attr('title') + '&middot; <a class="image-source-link" href="' + item.el.attr('data-source') + '" target="_blank">image source</a>'
-    #   }
-    #   gallery: {
-    #     enabled: true
-    #   }
-    #   zoom: {
-    #     enabled: true
-    #     duration: 300
-    #     opener: (element) ->
-    #       element.find('img')
-    #   }
-    # })
+
+    #popup gallery
+    $('.gallery').magnificPopup({
+      delegate: "a"
+      type: "image"
+      closeOnContentClick: false
+      closeMarkup: $closeHTML
+      closeBtnInside: false
+      mainClass: "mfp-with-zoom mfp-img-mobile"
+      image: {
+        verticalFit: true
+        titleSrc: (item) ->
+          title = if(item.el.attr('title')?) then item.el.attr('title') else item.el.parent("dt").next("dd").text()
+          title + '&middot; <a class="image-source-link" href="' + item.el.attr('href') + '" target="_blank">image source</a>'
+      }
+      gallery: {
+        enabled: true
+      }
+      zoom: {
+        enabled: true
+        duration: 300
+        opener: (element) ->
+          element.find('img')
+      }
+    })
 
     ###
     CAROUSEL
     ###
-    $(".owl-carousel1").owlCarousel({
+    $(".owl-carousel").owlCarousel({
       items: 1
       itemsDesktop: [1029, 1]
       itemsDesktopSmall: false
       itemsTablet: [768, 1]
       itemsMobile: [479, 1]
-      navigation: true
-      navigationText: ['&lt;', '&gt;']
+      autoPlay: true
+      # navigation: true
+      # navigationText: ['&lt;', '&gt;']
       afterInit: ->
         return
     })
@@ -382,7 +405,6 @@ do($ = jQuery) ->
         o_target = $r.children('.' + c)
         # o_target = if ($r.children('.' + c).length) then $r.children('.' + c) else $r.append($("<div>").addClass(c))
         if (!$r.children(c).html())
-          # console.log("HTML hasn't set")
           if o_target.children('a').length == 0 then o_target.append('<a href="' + o_anchor.attr('href') + '" style="background-image: url(' + o_img + ');">
         <p>' + o_anchor.attr('title') + '</p></a>')
         # o_img = "/wp-content/themes/azis/library/images/thumb-#{id}.jpg"
@@ -394,16 +416,13 @@ do($ = jQuery) ->
         )
 
         if ($("<img/>").attr('src', o_img).isLoaded)
-          # console.log('image has been loaded')
           o_target.hide().stop().fadeIn('fast')
         else
-          # console.log('now loading')
           o_figure = o_target.children('figure')
           o_figure.addClass("loading")
           # preload
           $('<img/>').load o_img, (response, status, xhr) ->
             if (status != "error")
-              # console.log('image has just loaded')
               $(@).remove() #memory leaks
               o_figure.removeClass("loading")
             else
@@ -414,7 +433,6 @@ do($ = jQuery) ->
     #end of function
 
     deactivateSubMenu = (r) ->
-      # console.log("let's hide!")
       $(r).children(".nav-itemOutline").hide()
       $(r).children("a.subItem").removeClass("aimHover")
       return
@@ -425,14 +443,19 @@ do($ = jQuery) ->
     ###
     # OPEN SIDE MENU
     $("#side-menu-trigger").on 'click', ->
-      # set height
-      # h = if $(window).innerHeight() then $(window).innerHeight() else $(window).height
       # $mobileMenu.children('ul').css 'height', h - $(@).outerHeight(true) - 80
       # show panel
       $SM.css({
         'width': $SMW,
         'right': "-" + $SMW
-      }).show().stop().animate 'right': 0
+      }).show().stop().animate 'right': 0, ->
+        # set height
+        h = if $(window).innerHeight() then $(window).innerHeight() else $(window).height
+        h -= ($(".sideMenu-buttons").outerHeight(true) + 50)
+        if h < $('.side-menu-body').outerHeight(true)
+          $('.side-menu-body').css('height', h).perfectScrollbar
+            suppressScrollX: true #hide horizontal scrollbar
+        return
       $SM.showOuterClickLayer("slideSide")
       return
     # CLOSE SIDE MENU
@@ -441,18 +464,40 @@ do($ = jQuery) ->
       $ocL.hide()
       return
     $SM.on 'swiperight', closeMenuPanel
-    $(".closeButton").on 'tap click', closeMenuPanel
-
+    $("#sideMenu-close").on 'tap click', closeMenuPanel
+    # TOGGLE SEARCHBOX
+    $("#sideMenu-searchform-trigger").on 'tap click', ->
+      $("#side-searchform").stop().slideToggle 'fast', ->
+        $("#sideMenu-searchform-trigger").toggleClass('hover')
+        return
+      return
 
     ###
       header menu bind for desktop
     ###
     scriptsForDesktop = ->
-      $(window).on 'scrollFinish', (event, scrollTop) ->
-        headerControl(scrollTop)
+      desktopToolsControl -1
+      $(window).on 'scrollFinish.desktopScrollFinish', (event, scrollTop) ->
+        desktopToolsControl(scrollTop)
         return
-      $(window).on 'scroll', ->
+
+      ###
+      SOCIAL BOOKMARK COUNTER
+      ###
+      # SBMアイコンのhoverイベントでカウンタをポップアップさせる
+      $(".sbm-body").on
+        'mouseenter': ->
+          $(@).next('.sbm-count').stop().fadeIn()
+          return
+        'mouseleave': ->
+          $(@).next('.sbm-count').stop().fadeOut()
+          return
+      , "a"
+
+      $(window).on 'scroll.sideMenuTrigger', ->
         $('#side-menu-trigger').fadeOut();
+        $sbm.stop().hide()
+
 
       # $(".subPageList").children("ul").css 'height', "auto"
       # $(".nav").on(
@@ -476,7 +521,6 @@ do($ = jQuery) ->
       #           $("#header-searchbox-container .search-field").focus()
       #         return
       #       activateSubMenu($(@).find("li").first().get(0)) #初期選択項目をset
-      #       # console.log(obj.get(0))
       #       $subMenu.showOuterClickLayer()
       #     return
       #   # mouseleave: ->
@@ -492,7 +536,8 @@ do($ = jQuery) ->
 
     scriptsForMobile = ->
       # On mobile, SIDE MENU TRIGGER is always needed!
-      $('#side-menu-trigger').show();
+      $('#side-menu-trigger').css("top", "1.5rem").show()
+      # Reset desktop script
       return
 
     ###
@@ -502,7 +547,10 @@ do($ = jQuery) ->
       # 一旦バインド系をクリアする
       # $("#mobile-menu-trigger").off()
       # $(".nav").off()
-      $(window).off "scrollFinish"
+      # scrollイベント自体をoffすると内部でscrollイベントを使っているscrollFinishが再開できなくなるので、名前空間を使ってoff
+      $(window).off ".desktopScrollFinish .sideMenuTrigger"
+      $(".sbm-body").off()
+      $('.head-branding,.head-nav,.sbm-container,.sbm-count,#side-menu-trigger,.side-menu-body').removeAttr('style')
 
       # position re-get
       $.getFooterOffsetY()
@@ -523,22 +571,25 @@ do($ = jQuery) ->
     ###
     GALLERY POSITIVE ALPHA
     ###
-    # $gallery = $('.img-group')
-    # $gallery.on {
-    #   'mouseover': ->
-    #     # console.log "on"
-    #     $(@).parents(".img-group").find("img").not(this).stop().fadeTo(300,0.5);
-    #     return
-    #   'mouseleave': ->
-    #     # console.log "off"
-    #     $gallery.find("img").not(this).stop().fadeTo(300,1);
-    #     return
-    # }, 'img'
+    $gallery = $('.img-group,.gallery')
+    $gallery.on
+      'mouseover': ->
+        $(@).parents(".img-group,.gallery").find("img").not(this).stop().fadeTo(300,0.5);
+        return
+      'mouseleave': ->
+        $gallery.find("img").not(this).stop().fadeTo(300,1);
+        return
+    , 'img'
 
+    ###
+    PERFECT SCROLLBAR to PRIVACY POLICY
+    ###
+    $(".privacypolicy-container").perfectScrollbar
+      suppressScrollX: true #hide horizontal scrollbar
+    $(".psb").perfectScrollbar
 
     $(window).resize ->
-      # console.log "resize"
-      $.waitForFinalEvent2 initBasedOnScreen, 200
+      $.waitForFinalEvent2 initBasedOnScreen, 100
       $.getFooterOffsetY()
       return
 

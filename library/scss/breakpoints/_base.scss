@@ -74,7 +74,7 @@ LAYOUT & GRID STYLES
 *********************/
 
 .wrap {
-	width: 96%;
+	width: 100%;
 	margin: 0 auto;
 }
 
@@ -106,6 +106,7 @@ a, a:visited {
 	}
 }
 .bg-dark {
+	color: $white;
 	a, a:visited {
 		color: darken($white, 5%);
 		&:hover, &:focus {
@@ -146,6 +147,9 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5 {
 	a {
 		text-decoration: none;
 	}
+	.fa {
+		padding-right: .2em;
+	}
 }
 
 h1, .h1 {
@@ -171,29 +175,33 @@ h3, .h3 {
 
 h4, .h4 {
 	@include adjust-font-size-to(20px, 2);
+	@include rhythm-margins(1.7, .3);
 	// font-size: 1.1em;
 	font-weight: normal;
 }
 
 h5, .h5 {
 	@include adjust-font-size-to(16px, 1);
+	@include rhythm-margins(.7, .3);
+	font-family: $sans-serif;
 	// font-size: 0.846em;
 	// line-height: 2.09em;
 	// text-transform: uppercase;
 	// letter-spacing: 2px;
 }
 h6 {
-	@include adjust-font-size-to(12px, 1);
+	@include adjust-font-size-to(14px, 1);
 	// text-transform: uppercase;
+	@include rhythm-margins(.5, 0);
 	letter-spacing: 2px;
+	font-weight: normal;
 }
 hgroup {
-	@include rhythm-margins(0, 1);
+	@include rhythm-margins(0, 2);
 	h1, h2, h3, h4, h5, h6 {
 		margin: 0;
 	}
 }
-
 
 /*********************
 LAYOUT
@@ -204,6 +212,12 @@ LAYOUT
 .hidden-phone {display: none !important;}
 .hidden-tablet {display: block !important;}
 .hidden-desktop {display: block !important;}
+img.visible-phone {display: inline-block !important;}
+img.visible-tablet {display: none !important;}
+img.visible-desktop {display: none !important;}
+img.hidden-phone {display: none !important;}
+img.hidden-tablet {display: inline-block !important;}
+img.hidden-desktop {display: inline-block !important;}
 
 #outerClickLayer {
 	position: fixed;
@@ -217,10 +231,150 @@ LAYOUT
 	display: none;
 }
 
-// // サイドメニュー表示時に一時的にコンテンツがはみ出すので
-// #container {
-// 	// overflow: hidden;
-// }
+.layout {
+	> li {
+		list-style: outside none;
+		display: block;
+		float: left;
+	}
+}
+.horizontal-padding {
+	// padding-left: 2%;
+	// padding-right: 2%;
+}
+
+/******************************************************************
+UTILITY
+******************************************************************/
+
+.emboss, .emboss-top, .emboss-bottom {
+	position: relative;
+	overflow: hidden;
+	&.emboss-radius {
+		&:after, &:before {
+			@include border-radius(40%)
+		}
+	}
+}
+.emboss:after,
+.emboss-top:after,
+.emboss:before,
+.emboss-bottom:before {
+	display: block;
+	content: " ";
+	z-index: 1;
+	width: 100%;
+	max-width: 1040px;
+	position: absolute;
+	left: 0;
+	right: 0;
+	height: 10px;
+	margin: 0 auto;
+	@include box-shadow(0 0 4px rgba(0, 0, 0, .4));
+}
+.emboss, .emboss-top {
+	&:after {
+		bottom: 100%;
+	}
+}
+.emboss, .emboss-bottom {
+	&:before {
+		top: 100%;
+	}
+}
+.block-link {
+	a {
+		display: block;
+	}
+}
+.tCenter, .tRight, .tLeft {
+	display: block;
+}
+.tCenter {
+	text-align: center;
+}
+.tRight {
+	text-align: right;
+}
+.tLeft {
+	text-align: left;
+}
+.spacer {
+	@include rhythm-margins(1);
+}
+
+.loader {
+	position: relative;
+	.fa-spinner {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		display: none;
+		z-index: 2;
+		@include adjust-font-size-to(40px, 2);
+		margin-left: -20px;
+		margin-top: -21px;
+	}
+}
+.loading {
+	.fa-spinner {
+		display: block;
+	}
+}
+.note {
+	@include adjust-font-size-to(12px, 1);
+	margin: 0;
+}
+.entry-content .note {margin: 0;}
+.attention {
+	color: #DA545F;
+}
+.fa-fi {
+	padding-right: .2em;
+}
+.sub-section {
+	border: 4px solid #eee;
+	padding: rhythm(.5);
+	@include rhythm-margins(.5);
+	h5:first-child,
+	p:first-child,
+	ul:first-child {
+		margin-top: 0;
+	}
+	p:last-child,
+	ul:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.circle {
+	display: inline-block;
+	width: 100px;
+	height: 100px;
+	@include border-radius(50%);
+	padding-top: 10px;
+	margin: 0 .5em;
+	border: 5px solid #ccc;
+	font-size: 13px;
+	line-height: 25px;
+	text-align: center;
+	background: $gray;
+	color: $white;
+	strong {
+		color: $white;
+		font-weight: bold;
+		font-size: 40px;
+		line-height: 45px;
+	}
+	&.circle-pink {
+		background: $bones-pink;
+		border-color: lighten($bones-pink, 15%);
+	}
+	&.circle-carrot {
+		background: $bones-carrot;
+		border-color: lighten($bones-carrot, 15%);
+	}
+}
 
 /*********************
 HEADER STYLES
@@ -230,7 +384,6 @@ HEADER STYLES
 	// background-color: $black;
 	background: $white;
 	border-top: 3px solid $tds-blue;
-	border-bottom: 1px solid $bdr-color01;
 }
 	.head-branding {
 		text-align: center;
@@ -354,20 +507,27 @@ SIDE MENU
 *********************/
 #side-menu-trigger {
 	position: fixed;
-	top: rhythm(1);
+	z-index: 9;
+	top: 10px;
 	right: rhythm(1);
-	color: $meta-gray;
 	display: block;
 	@include border-radius(25px);
 	border: 1px solid $meta-gray;
-	@include adjust-font-size-to(28px, 2.5);
 	width: 53px;
 	text-align: center;
 	background: rgba(255, 255, 255, .2);
 	@include transition(color .5s linear, background-color .5s linear);
+	i {
+		color: $meta-gray;
+	}
 	&:hover {
 		background: rgba(255, 255, 255, .9);
-		color: darken($meta-gray, 20%);
+		i {
+			color: darken($meta-gray, 20%);
+		}
+	}
+	.fa {
+		@include adjust-font-size-to(28px, 2.5);
 	}
 }
 #side-menu {
@@ -384,19 +544,126 @@ SIDE MENU
 	&.outer {
 		@include box-shadow(0 0 5px rgba(0, 0, 0, .5));
 	}
+
+	a {
+		display: block;
+		text-decoration: none;
+		&:hover, &.hover {
+			background: darken($black, 5%);
+		}
+	}
 }
+	.side-menu-widget {
+		border-bottom: 1px solid lighten($black, 10%);
+		// border-top: 1px solid darken($black, 10%);
+	}
 	$sidePaddingHorizon: 2rem;	//サイドメニューの左右の余白
 	.side-menu-body {
 		// padding: rhythm(2) 2em;
 		// min-width: 200px;
 		overflow: hidden;
 	}
-	#searchform {
-		label {display: none;}
+	.sideMenu-buttons {
+		position: relative;
+		height: 53px;
+
+		a {
+			position: absolute;
+			top: 0;
+			width: 53px;
+			text-align: center;
+			i {
+				@include adjust-font-size-to(30px, 2.5);
+			}
+		}
+	}
+		#sideMenu-close {
+			left: 0;
+		}
+		#sideMenu-searchform-trigger {
+			right: 0;
+		}
+	#side-searchform {
+		background: darken($black, 5%);
+		padding: rhythm(1) $sidePaddingHorizon;
+		border-bottom: 1px solid lighten($black, 10%);
+		display: none;
+		// border-top: 1px solid darken($black, 10%);
+
+		.searchform-body {
+			width: 100%;
+		}
+		.input-container {
+			float: left;
+			width: 200px;
+			input {
+				@include box-sizing(border-box);
+				margin-bottom: 0;
+			}
+		}
+		.button-container {
+			margin-left: 220px;
+		}
+			#searchsubmit {
+				margin: 5px 0;
+			}
 	}
 	.side-menu-body {
 		// display: none;
 	}
+		#menu-side_menu {
+			margin: 0;
+			li {
+				border-bottom: 1px solid lighten($black, 3%);
+			}
+			a {
+				line-height: rhythm(2);
+				padding: 0 $sidePaddingHorizon;
+				&:before {
+					@extend .fa;
+					width: 1.7em;
+				}
+			}
+		}
+			#menu-item-52 a:before {
+				@extend .fa-angellist;
+			}
+			#menu-item-53 a:before {
+				@extend .fa-yen;
+			}
+			#menu-item-44 a:before {
+				@extend .fa-graduation-cap;
+			}
+			#menu-item-48 a:before {
+				@extend .fa-building;
+			}
+			#menu-item-50 a:before {
+				@extend .fa-question;
+			}
+			#menu-item-51 a:before {
+				@extend .fa-users;
+			}
+			#menu-item-49 a:before {
+				@extend .fa-car;
+			}
+			#menu-item-45 a:before {
+				@extend .fa-newspaper-o;
+			}
+			#menu-item-47 a:before {
+				@extend .fa-sitemap;
+			}
+			#menu-item-57 a:before {
+				@extend .fa-envelope;
+			}
+			#menu-item-170 a:before {
+				@extend .fa-book;
+			}
+			#menu-item-249 a:before {
+				@extend .fa-bus;
+			}
+			#menu-item-266 a:before {
+				@extend .fa-home;
+			}
 
 /*********************
 POSTS & CONTENT STYLES
@@ -404,16 +671,30 @@ POSTS & CONTENT STYLES
 
 #content {
 }
+	#main {
+	}
+	#inner-content {
+		@include rhythm-padding(3, 0);
+	}
 
 		.hentry {
 			background-color: $white;
 			border-radius: 3px;
-			margin-bottom: 1.5em;
-			border: 1px solid $border-color;
+			border: 1px solid lighten($border-color, 10%);
+			@include rhythm-margins(0, 2);
 
-			header {
-				border-bottom: 1px solid $light-gray;
-				padding: 1.5em;
+			&:last-child {
+				@include rhythm-margins(0);
+			}
+
+			// header {
+			// 	// border-bottom: 1px solid $light-gray;
+			// 	// padding: 1.5em;
+			// 	@include rhythm-padding(1);
+
+			// }
+			.entry-header {
+				padding: rhythm(1) rhythm(1) rhythm(2);
 			}
 
 			footer {
@@ -430,16 +711,34 @@ POSTS & CONTENT STYLES
 		.single-title,
 		.page-title,
 		.entry-title {
-			margin: 0;
+			// margin: 0;
+			@include rhythm-margins(0);
+			a {
+				color: $text-color;
+			}
 		}
+
+		// .page-title,
+		// .archive-title {
+		// 	padding: rhythm(1) 1em;
+		// 	color: $meta-gray;
+		// 	// background: $gray;
+		// 	// background: url(../images/bg-title-mb.jpg) 50% 50% no-repeat;
+		// 	// @include background-size(cover);
+		// 	text-align: center;
+		// 	@include adjust-font-size-to(25px, 2);
+		// }
+		// 	.icon-container {
+		// 		display: block;
+		// 		width: 30%;
+		// 		margin: 0 auto;
+		// 		@include adjust-font-size-to(36px, 3)
+		// 	}
 
 		.single-title {}
 
-		.page-title {}
-
 		.entry-title {}
 
-		.archive-title {}
 
 		/* want to style individual post classes? Booya! */
 		.post-id {}         /* post by id (i.e. post-3) */
@@ -462,25 +761,50 @@ POSTS & CONTENT STYLES
 
 		/* entry content */
 		.entry-content {
-			padding: 1.5em 1.5em 0;
 
+			h5 {
+			@include index($color-yellow, $tds-blue);
+			}
+			hgroup h5 {
+				padding-left: 0;
+				position: static;
+			}
+			h6 {
+				@include index($bones-blue, $bones-orange);
+			}
+
+			// padding: 0 1.5em;
+			.section {
+				@include rhythm-margins(2);
+				&:first-child {
+					margin-top: 0;
+				}
+				&:last-child {
+					margin-bottom: 0;
+				}
+			}
 			p {
-				margin: 0 0 1.5em;
+				@include rhythm-margins(0, 1);
 			}
 
 
 			ul, ol, table, dl {}
 
 			ul, ol {
-
-				li {}
+				margin-left: 2em;
 
 			}
 
 			ul {
-
-				li {}
-
+				li {
+					list-style: outside circle;
+					> ul {
+						@include rhythm-margins(0);
+					}
+					li {
+						list-style: outside disc;
+					}
+				}
 			}
 
 			ol {
@@ -491,7 +815,7 @@ POSTS & CONTENT STYLES
 
 			table {
 				width: 100%;
-				border: 1px solid $gray;
+				border: 1px solid darken($gray, 5%);
 				margin-bottom: 1.5em;
 
 				caption {
@@ -504,16 +828,21 @@ POSTS & CONTENT STYLES
 			}
 
 			tr {
-				border-bottom: 1px solid $gray;
+				border-bottom: 1px solid darken($gray, 5%);
 
 				&:nth-child(even) {
 					background-color: $light-gray;
 				}
 			}
-
+			th, td {
+				padding: rhythm(.25) .5em;
+				ul, p {
+					margin-bottom: 0;
+				}
+			}
 			td {
-				padding: 7px;
-				border-right: 1px solid $gray;
+				border-right: 1px solid darken($gray, 5%);
+				text-align: left;
 
 				&:last-child {
 					border-right: 0;
@@ -521,9 +850,10 @@ POSTS & CONTENT STYLES
 			}
 
 			th {
-				background-color: $light-gray;
-				border-bottom: 1px solid $gray;
-				border-right: 1px solid $gray;
+				background-color: darken($light-gray, 2%);
+				border-bottom: 1px solid darken($gray, 5%);
+				border-right: 1px solid darken($gray, 5%);
+				font-weight: normal;
 
 				&:last-child {
 					border-right: 0;
@@ -548,14 +878,17 @@ POSTS & CONTENT STYLES
 			dd {
 				margin-left: 0;
 				font-size: 0.9em;
-				color: #787878;
 				margin-bottom: 1.5em;
+				@include rhythm-margins(0, 1);
 			}
 
 			img {
-				margin: 0 0 1.5em 0;
-				max-width: 100%;
+				margin: 0;
+				// max-width: 100%;
 				height: auto;
+			}
+			figure {
+				@include rhythm-margins(.5, 1.5);
 			}
 
 			/*
@@ -610,8 +943,10 @@ POSTS & CONTENT STYLES
 
 		/* image gallery styles */
 		.gallery {
+			@extend .cf;
 
 			dl {
+				float: left;
 
 				a {}
 
@@ -621,7 +956,7 @@ POSTS & CONTENT STYLES
 
 			dt {}
 
-			dd {}
+			dd { display: none;}
 
 		} /* end .gallery */
 
@@ -638,13 +973,73 @@ POSTS & CONTENT STYLES
 		margin: 0;
 	}
 
+.page-template-default,
+.page-template-page-contact,
+.blog,
+.single,
+.archive,
+.search {
+	.entry-content {
+		padding: 0 rhythm(1);
+	}
+}
+
+/******************************************************************
+PANEL STYLE
+******************************************************************/
+.panel-container {
+	position: relative;
+	border-top: 1px solid $bdr-color01;
+	@include rhythm-padding(3);
+	&:first-child {
+		border-top: none;
+	}
+	text-align: center;
+	.inner-wrap-relative {
+		position: relative;
+	}
+	height: 100%;
+
+	.panel-body {
+		// @include rhythm-padding(1);
+	}
+	hgroup {
+
+	}
+	.panel-sentence {
+		p:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
+.sub-panel-container {
+	// @include grid-row-parent;
+	h4 {
+		line-height: 1;
+	}
+}
+	.sub-panel {
+		margin: 0;
+		li {
+			@include rhythm-padding(1);
+			h3, h4, h5, h6 {
+				text-align: center;
+			}
+		}
+	}
+	.sub-panel-body {
+		padding: rhythm(1) 5%;
+	}
+
+
 /******************************************************************
 PAGE NAVI STYLES
 ******************************************************************/
 
 .pagination,
 .wp-prev-next {
-	margin: 1.5em 0;
+	// margin: 1.5em 0;
+	@include rhythm-margins(2);
 }
 	.pagination{
     text-align: center;
@@ -680,7 +1075,7 @@ PAGE NAVI STYLES
       color: $blue;
 
       &:hover, &:focus {
-      	background-color: $blue;
+      	background-color: $tds-blue;
       	color: $white;
       }
     }
@@ -713,272 +1108,94 @@ PAGE NAVI STYLES
 	} /* end .wp-prev-next */
 
 /******************************************************************
-COMMENT STYLES
-******************************************************************/
+PLUGIN STYLE
+*****************************************************************/
+// BUSINESS CALENDAR
+$attr00: #adadad;
+$attr01: #afdbee;
+$attr02: #c5c4f7;
+.business-calendar {
+	background: #CACACA;
+	border-collapse: collapse;
+	@include adjust-font-size-to(11px, 1);
+	text-align: center;
+	width: 100%;
+	max-width: 300px;
+	margin: 0 auto 5px;
 
-/* h3 comment title */
-#comments-title {
-	padding: 0.75em;
-	margin: 0;
-	border-top: 1px solid $light-gray;
+	caption	{
+		// border-top: 1px solid #CACACA;
+		// border-left: 1px solid #CACACA;
+		// border-right: 1px solid #CACACA;
+		margin: 5px 0 0;
+		padding: 3px;
+		text-align: center;
+	}
 
-	/* number of comments span */
-	span {}
+	th {
+		background: #ddd; border: 1px solid #CACACA; font-weight: normal; padding: 3px; width:14%;
+	}
+	td { background: #FFFFFF; border: 1px solid #CACACA; padding: 3px; }
 
+	.before {background: #f0f0f0; color: lighten($text-color, 40%);}
+	.today	{ font-weight: bold; color: $bones-pink; background: lighten($bones-pink, 40%);}
+	.attr0	{ color: desaturate(darken($attr00, 30%), 10%); background: $attr00; }
+	.attr1	{ color: desaturate(darken($attr01, 30%), 10%); background: $attr01; }
+	.attr2	{ color: desaturate(darken($attr02, 30%), 10%); background: $attr02; }
+	.attr3	{ color: #0000FF; background:#CCCCFF; }
+	.attr4	{ color: #CC00CC; background:#FFCCFF; }
 }
-
-.comment-nav {
-
-	ul {
-
-		li {}
-
-	}
-}
-
-
-.commentlist {
-	margin: 0;
-	list-style-type: none;
-}
-
-.comment {
-	position: relative;
-	clear: both;
-	overflow: hidden;
-	padding: 1.5em;
-	border-bottom: 1px solid $light-gray;
-
-	.comment-author {
-		padding: 7px;
-		border: 0;
-	}
-
-	/* vcard */
-	.vcard {
-		margin-left: 50px;
-
-		cite.fn {
-			font-weight: 700;
-			font-style: normal;
-
-			a.url {}
-
+	.business-calendar-attribute {
+		margin: 0 auto 0;
+		padding:0;
+		max-width: 300px;
+		li { padding: 0 10px; border-left: 1.5em solid $bones-pink; text-align: left; padding-left: .5em;
+			margin-bottom: 3px;
+			@include adjust-font-size-to(12px, 1);
 		}
-
-		time {
-			display: block;
-			font-size: 0.9em;
-			font-style: italic;
-
-			a {
-				color: $meta-gray;
-				text-decoration: none;
-
-				&:hover {
-					text-decoration: underline;
-				}
-
-			}
-
-		}
-
-		.photo {}
-
-		.avatar {
-			position: absolute;
-			left: 16px;
-			border-radius: 50%;
-		}
-
-	} /* end .commentlist .vcard */
-
-	&:last-child {
-		margin-bottom: 0;
+		.attr0 { border-color: $attr00;}
+		.attr1 { border-color: $attr01;}
+		.attr2 { border-color: $attr02;}
+		.attr3 { color: #0000FF; background:#CCCCFF; }
+		.attr4 { color: #CC00CC; background:#FFCCFF; }
 	}
-
-	.children {
-		margin: 0;
-
-		li {}
-
-			/* variations */
-			.comment {}
-			.alt {}
-			.odd {}
-			.even {}
-			.depth-1 {}           /* change number for different depth */
-			.byuser {}
-			.bypostauthor {}
-			.comment-author-admin {}
-
-	} /* end children */
-
-
-	&[class*=depth-] {
-		margin-top: 1.1em;
-	}
-
-	&.depth-1 {
-		margin-left: 0;
-		margin-top: 0;
-	}
-
-	&:not(.depth-1) {
-		margin-top: 0;
-		margin-left: 7px;
-		padding: 7px;
-	}
-
-	&.depth-2 {}
-	&.depth-3 {}
-	&.depth-4 {}
-	&.depth-5 {}
-
-	/* general comment classes */
-	&.alt {}
-	&.odd {
-		background-color: $white;
-	}
-	&.even {
-		background: $light-gray;
-	}
-	&.parent {}
-	&.comment {}
-	&.children {}
-	&.pingback {}
-	&.bypostauthor {}
-	&.comment-author {}
-	&.comment-author-admin {}
-	&.thread-alt {}
-	&.thread-odd {}
-	&.thread-even {}
-}
-
-
-
-
-	/* comment meta */
-	.comment-meta {
-
-		a {}
-
-	}
-
-	.commentmetadata {
-
-		a {}
-
-	}
-
-	/* comment content */
-	.comment_content {
-
-		p {
-			margin: 0.7335em 0 1.5em;
-			font-size: 1em;
-			line-height: 1.5em;
-		}
-
-	} /* end .commentlist .comment_content */
-
-	/* comment reply link */
-	.comment-reply-link {
-		@extend .btn__blue;
-		font-size: 0.9em;
-		float: right;
-
-		&:hover,
-		&:focus {
-		}
-
-	} /* end .commentlist .comment-reply-link */
-
-	/* edit comment link */
-	.comment-edit-link {
-		font-style: italic;
-		margin: 0 7px;
-		text-decoration: none;
-		font-size: 0.9em;
-	}
-
-
-
-/******************************************************************
-COMMENT FORM STYLES
-******************************************************************/
-
-.comment-respond {
-	@extend .cf;
-	padding: 1.5em;
-	border-top: 1px solid $light-gray;
-}
-
-	#reply-title {
-		margin: 0;
-	}
-
-	.logged-in-as {
-		color: $meta-gray;
-		font-style: italic;
-		margin: 0;
-
-		a {
-			color: $text-color;
+	.widget .business-calendar-attribute {
+		margin:5px auto 0; padding:0;
+		li		{
+			@include rhythm-padding(0);
 		}
 	}
+	#sidebar .business-calendar-desc { margin: 5px; }
+	#tooltip {
+		position: absolute; z-index: 3000; border: 1px solid #111;
+							  background-color: #eee; padding: 5px;	opacity: 0.85; }
+	#tooltip h3, #tooltip div	{ margin: 0; }
 
-	.comment-form-comment {
-		margin: 1.5em 0 0.75em;
-	}
-
-	.form-allowed-tags {
-		padding: 1.5em;
-		background-color: $light-gray;
-		font-size: 0.9em;
-	}
-
-	/* comment submit button */
-	#submit {
-		@extend .btn__blue;
-		float: right;
-		font-size: 1em;
-	}
-
-	/* comment form title */
-	#comment-form-title {
-		margin: 0 0 1.1em;
-	}
-
-	/* cancel comment reply link */
-	#cancel-comment-reply {
-		a {}
-	}
-
-	/* logged in comments */
-	.comments-logged-in-as {}
-
-	/* allowed tags */
-	#allowed_tags {
-		margin: 1.5em 10px 0.7335em 0;
-	}
-
-	/* no comments */
-	.nocomments {
-		margin: 0 20px 1.1em;
+	#changeMonth {
+		.changeMonth-item {
+			text-align: center;
+		}
+		.hide {
+			display: none;
+		}
 	}
 
 /*********************
 SIDEBARS & ASIDES
 *********************/
 
-.sidebar {}
+.sidebar {
+	@include rhythm-padding(0, 3);
+}
 
-	.widgettitle {}
+	.widgettitle {
+		// font-family: $serif;
+	}
 
 	.widget {
 
 		ul {
+			margin: 0 auto;
 
 			li {
 
@@ -1012,9 +1229,91 @@ FOOTER STYLES
 
 .footer {
 	clear: both;
-	background-color: $black;
-	color: $light-gray;
+	background-color: $brown;
+	text-align: center;
+
+	address {
+		background: darken($brown, 5%);
+		@include rhythm-padding(2);
+		font-style: normal;
+		ul {
+			margin: 0;
+		}
+		.name {
+			display: block;
+			@include adjust-font-size-to(24px, 1.5);
+			margin-bottom: rhythm(1);
+		}
+		.tel {
+			// @include adjust-font-size-to(18px, 1.5)
+		}
+		.tel-free {
+			@include adjust-font-size-to(24px, 2);
+		}
+	}
 }
+
+/*********************
+RESERVE TOUR FORM STYLES
+*********************/
+.form-body {
+	border-bottom: 1px dashed #666;
+	padding-bottom: rhythm(1);
+	margin-bottom: rhythm(1);
+}
+	// フォームボタン
+	#reserveTour {
+		@include rhythm-margins(1);
+		a {
+			@include adjust-font-size-to(20px, 2);
+		}
+	}
+	// フォーム
+	#reserveDate {
+		width: 10em;
+	}
+	#reserveHour {
+		width: 5em;
+	}
+
+
+// SOCIAL BOOKMARK
+.sbm-container {
+	border-top: 1px solid lighten($brown, 5%);
+	border-bottom: 1px solid lighten($brown, 5%);
+	// border-top: 1px solid darken()
+}
+	.sbm-body {
+		margin: 0;
+		li {
+			@include rhythm-padding(1);
+			width: 25%;
+			text-align: center;
+			span {
+				display: block;
+			}
+			&:hover {
+				background: darken($brown, 10%);
+			}
+		}
+		a {
+			@include transition(font-size .1s ease-in);
+			// -moz-transition-property: background-color;
+			// -moz-transition-duration: 1s;
+			// -moz-transition-timing-function: linear;
+			@include adjust-font-size-to(30px, 2);
+			// font-size: 30px;
+			// line-height: 42px;
+			// background-color: #f00;
+			&:hover {
+				// background-color: #ff0;
+				// font-size: 40px;
+				@include adjust-font-size-to(40px, 2)
+			}
+		}
+		.fa {
+		}
+	}
 
 	/*
 	if you checked out the link above:
@@ -1029,11 +1328,185 @@ FOOTER STYLES
 
 		ul {
 
-			li {}
+			li {
+				border-bottom: 1px solid lighten($brown, 5%);
+			}
 
 		}
+			a {
+				display: block;
+				line-height: rhythm(2);
+				&:hover {
+					background-color: darken($brown, 5%);
+				}
+			}
 
 	} /* end .footer-links */
 
+	.copyright {
+	}
 
-	.copyright {}
+/*********************
+PLUGINS
+*********************/
+// 見学申し込みポップアップ
+	#privacypolicy .privacypolicy-container {
+		height: 200px;
+		@include adjust-font-size-to(12px, 1);
+		overflow: hidden;
+		border: 1px solid $bdr-color01;
+		.privacypolicy-body {
+			padding: rhythm(1);
+		}
+	}
+
+.mfp-content {
+	#privacypolicy .privacypolicy-container {
+		border-color: #333;
+		@include transition(all, .2s, linear);
+
+		&:hover {
+			background: #111;
+			border-color: #777;
+		}
+	}
+	.popup-tel {
+		@include adjust-font-size-to(20px, 2);
+		font-weight: bold;
+	}
+}
+	.form-side-text {
+		@include adjust-font-size-to(14px, 3);
+	}
+
+/*********************
+JQUERY UI
+*********************/
+// TOOLTIP
+.jqui-tt {
+	border-bottom: 1px dotted $black;
+	cursor: pointer;
+	.fa {
+		@include adjust-font-size-to(10px);
+		color: #3077c1;
+	}
+}
+// ACCORDION
+.jqui-accordion {
+	h3 {
+	}
+}
+
+// ORIGINAL ACCORDION
+.accordion-dl {
+	dt {
+		cursor: pointer;
+		position: relative;
+		.fa:last-child {
+			position: absolute;
+			top: 50%;
+			right: 10px;
+			margin-top: -10px;
+		}
+	}
+}
+.entry-content {
+	.btn-group {
+		margin: rhythm(1) 0 rhythm(2);
+		@include rhythm-padding(1);
+		border-top: 1px dotted #ccc;
+		border-bottom: 1px dotted #ccc;
+		text-align: center;
+		li {
+			list-style: none;
+			display: inline-block;
+		}
+	}
+}
+
+/*********************
+FRONTPAGE STYLES
+*********************/
+.home {
+	#main {
+		// margin: 0;
+	}
+}
+	.topFeaturedPanel {
+		img {
+			vertical-align: bottom;
+		}
+	}
+
+	// 768up.scssに書きたいところだが、@media 内だとextendできないので
+	.frontPage-nav-container {
+		border-bottom: 1px solid $bdr-color01;
+	}
+	.frontPage-nav {
+		.top-nav {
+			a {
+				padding: rhythm(1) 0;
+				text-align: center;
+				color: $dark-brown;
+				@include transition(background-color .2s linear);
+				&:hover {
+					background: lighten($dark-brown, 55%);
+					color: darken($dark-brown, 5%);
+					text-decoration: none;
+					.fa {
+						@include adjust-font-size-to(36px, 2);
+					}
+				}
+				.fa {
+					@include adjust-font-size-to(24px, 2);
+					@include transition(font-size .2s ease);
+				}
+			}
+		}
+		// a:before {
+		// 	display: block;
+		// 	@extend .fa;
+		// 	@include adjust-font-size-to(24px, 2);
+		// 	@include transition(font-size .2s ease)
+		// }
+		// a:hover:before {
+		// 	@include adjust-font-size-to(36px, 2);
+		// }
+		// .menu-item-21 a:before {@extend .fa-exclamation;}
+		// .menu-item-22 a:before {@extend .fa-yen;}
+		// .menu-item-65 a:before {@extend .fa-fast-forward;}
+		// .menu-item-26 a:before {@extend .fa-question;}
+		// .menu-item-27 a:before {@extend .fa-users;}
+	}
+
+	#top-point01 {
+		padding-bottom: 40%;
+		background: #ede7e2 url(../images/home-image01-mb.jpg) 50% 100% no-repeat;
+		background-size: contain;
+	}
+	#top-groupDiscount {
+		border-top: none;
+	}
+
+	#top-news_calendar {
+		$c: #f2f2f2;
+		background: $c;
+		.h5 {
+			width: 150px;
+			margin-left: auto;
+			margin-right: auto;
+			text-align: center;
+		}
+		.fa {
+			@include adjust-font-size-to(30px, 3);
+			color: darken($c, 10%);
+		}
+		span {
+			display: block;
+			line-height: rhythm(2);
+			border-top: 1px solid darken($c, 10%);
+		}
+	}
+		.calendar-body {
+			padding-top: rhythm(3);
+		}
